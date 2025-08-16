@@ -21,7 +21,7 @@
 # [[redirects]]
 #   from = "https://over40webclub-astro.netlify.app/*"
 #   to = "https://over40web.club-astro/:splat"
-#   status = 301
+#   status = 302
 #   force = true
 
 # Headers for security and performance
