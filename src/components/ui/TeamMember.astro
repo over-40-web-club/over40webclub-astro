@@ -1,0 +1,69 @@
+---
+import OptimizedImage from './OptimizedImage.astro';
+import SocialIcon from './SocialIcon.astro';
+import type { TeamMember } from '../../types/content.js';
+
+export interface Props {
+  member: TeamMember;
+}
+
+const { member } = Astro.props;
+const { name, bio, image, imageAlt, social } = member;
+
+// Filter out empty social links
+const socialLinks = Object.entries(social).filter(
+  ([_, value]) => value && value.trim() !== ''
+);
+---
+
+<div class='team-member'>
+  <img
+    src={image}
+    alt={imageAlt}
+    class='mx-auto circle rounded-circle'
+    width={160}
+    height={160}
+    style='border: 7px solid #ccc; border-radius: 50%; object-fit: cover;'
+  />
+  <h4>{name}</h4>
+  <p class='text-muted' set:html={bio} />
+  <div class='social-links'>
+    {
+      socialLinks.map(([platform, value]) => {
+        // Handle different types of social links
+        if (platform === 'homepage' || platform === 'youtube') {
+          return <SocialIcon platform={platform} url={value as string} />;
+        } else {
+          return <SocialIcon platform={platform} username={value as string} />;
+        }
+      })
+    }
+  </div>
+</div>
+
+<style lang='scss'>
+  @import '../../styles/global.scss';
+
+  .team-member {
+    margin-bottom: 50px;
+    text-align: center;
+
+    h4 {
+      margin-top: 25px;
+      margin-bottom: 0;
+      text-transform: none;
+    }
+
+    p {
+      margin-top: 0;
+    }
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    margin-top: 15px;
+  }
+</style>

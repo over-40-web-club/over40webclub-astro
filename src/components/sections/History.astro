@@ -1,0 +1,72 @@
+---
+import { getEntry } from 'astro:content';
+import SectionHeader from '../ui/SectionHeader.astro';
+import TimelineItem from '../ui/TimelineItem.astro';
+
+// Get the history content
+const historyContent = await getEntry('sections', 'history');
+
+if (!historyContent) {
+  throw new Error('History content not found');
+}
+
+const { data } = historyContent;
+const { anchor, header, subheader, timeline = [] } = data;
+const sectionId = historyContent.slug; // Use slug as ID for HTML compatibility
+---
+
+<section class='page-section' id={sectionId}>
+  <div class='container'>
+    <div class='row'>
+      <SectionHeader header={header} subheader={subheader} />
+    </div>
+    <div class='row'>
+      <div class='col-lg-12'>
+        <ul class='timeline'>
+          {
+            timeline.map((item, index) => (
+              <TimelineItem
+                invert={index % 2 === 1}
+                imageFileName={item.imageFileName}
+                header={item.header}
+                subheader={item.subheader}
+                content={item.content}
+                imageContent={item.imageContent}
+              />
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang='scss'>
+  @import '../../styles/global.scss';
+
+  // Styling for the timeline section
+  .timeline {
+    position: relative;
+    padding: 0;
+    list-style: none;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 40px;
+      width: 2px;
+      margin-left: -1.5px;
+      content: '';
+      background-color: $gray-200;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .timeline {
+      &:before {
+        left: 50%;
+      }
+    }
+  }
+</style>

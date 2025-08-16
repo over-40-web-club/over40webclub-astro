@@ -1,0 +1,56 @@
+---
+import { getEntry } from 'astro:content';
+import SectionHeader from '../ui/SectionHeader.astro';
+import PortfolioItem from '../ui/PortfolioItem.astro';
+
+// Get the portfolio content
+const portfolioContent = await getEntry('sections', 'portfolio');
+
+if (!portfolioContent) {
+  throw new Error('Portfolio content not found');
+}
+
+const { header, subheader, anchor, portfolios } = portfolioContent.data;
+const sectionId = portfolioContent.slug; // Use slug as ID for HTML compatibility
+---
+
+<section id={sectionId} class='portfolio-section'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-lg-12 text-center'>
+        <SectionHeader header={header} subheader={subheader} />
+      </div>
+    </div>
+    <div class='row'>
+      {
+        portfolios?.map((portfolio) => (
+          <PortfolioItem
+            imageFileName={portfolio.imageFileName}
+            imageFileNameDetail={portfolio.imageFileNameDetail}
+            header={portfolio.header}
+            subheader={portfolio.subheader}
+            content={portfolio.content}
+            extraInfo={portfolio.extraInfo}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang='scss'>
+  .portfolio-section {
+    padding: 100px 0;
+    background-color: white;
+
+    * {
+      z-index: 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .portfolio-section {
+      padding: 60px 0;
+    }
+  }
+</style>

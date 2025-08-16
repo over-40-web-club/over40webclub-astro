@@ -1,0 +1,38 @@
+---
+import { getEntry } from 'astro:content';
+import SectionHeader from '../ui/SectionHeader.astro';
+
+// Get the contact content
+const contactContent = await getEntry('sections', 'contact');
+
+if (!contactContent) {
+  throw new Error('Contact content not found');
+}
+
+const { header, subheader } = contactContent.data;
+const sectionId = contactContent.slug; // Use slug as ID for HTML compatibility
+---
+
+<section id={sectionId} class='contact-section'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-lg-8 mx-auto text-center'>
+        <SectionHeader header={header} subheader={subheader} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang='scss'>
+  .contact-section {
+    padding: 100px 0;
+    background-color: #ffffff;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .contact-section {
+      padding: 60px 0;
+    }
+  }
+</style>

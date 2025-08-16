@@ -1,0 +1,50 @@
+---
+export interface Props {
+  header?: string;
+  subheader?: string;
+}
+
+const { header = '', subheader = '' } = Astro.props;
+---
+
+<div class='section-header text-center'>
+  <h2 class='section-heading text-uppercase'>{header}</h2>
+  {
+    subheader && (
+      <h3 class='section-subheading text-muted' set:html={subheader} />
+    )
+  }
+</div>
+
+<style lang='scss'>
+  @import '../../styles/global.scss';
+
+  .section-header {
+    h2.section-heading {
+      font-size: 40px;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    h3.section-subheading {
+      font-size: 16px;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 75px;
+      text-transform: none;
+      @include serif-font;
+
+      .terms-link {
+        color: #c6dd41;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #b2c92d;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+</style>

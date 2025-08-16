@@ -1,16 +1,52 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
+import { siteConfig } from '../config/site';
+import { getSections } from '../utils/content';
+import { getHomePageSEO, getCommonFAQs } from '../utils/dynamicSEO';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Portfolio from '../components/sections/Portfolio.astro';
+import History from '../components/sections/History.astro';
+import Team from '../components/sections/Team.astro';
+import Contact from '../components/sections/Contact.astro';
 
+import '../styles/global.scss';
+
+// Get sections for Team component
+const sections = await getSections();
+
+// Get SEO data for home page
+const homeSEO = getHomePageSEO();
+const faqs = getCommonFAQs();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout
+  title={homeSEO.title}
+  description={homeSEO.description}
+  type={homeSEO.type}
+  tags={homeSEO.tags}
+  faqs={faqs}
+>
+  <!-- Hero Section -->
+  <Hero />
+
+  <!-- About Section -->
+  <About />
+
+  <!-- Portfolio Section -->
+  <Portfolio />
+
+  <!-- History Section -->
+  <History />
+
+  <!-- Team Section -->
+  {
+    (() => {
+      const teamSection = sections.find((section) => section.slug === 'team');
+      return teamSection ? <Team sectionData={teamSection.data} /> : null;
+    })()
+  }
+
+  <!-- Contact Section -->
+  <Contact />
+</MainLayout>

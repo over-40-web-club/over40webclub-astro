@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '../../utils/icons.js';
+
+export interface Props {
+  iconName: IconName | string;
+  size?: string | number;
+  class?: string;
+  href?: string;
+  'aria-label'?: string;
+}
+
+const {
+  iconName,
+  size = '4x',
+  class: className = '',
+  href,
+  'aria-label': ariaLabel,
+} = Astro.props;
+
+const Component = href ? 'a' : 'div';
+---
+
+<Component
+  class={`circle-fa-button ${className}`}
+  href={href}
+  aria-label={ariaLabel || iconName}
+>
+  <Icon name={iconName} size={size} inverse />
+</Component>
+
+<style>
+  .circle-fa-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c6dd41, #a8c332);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 0 auto 20px;
+  }
+
+  .circle-fa-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(198, 221, 65, 0.3);
+    text-decoration: none;
+    color: white;
+  }
+
+  .circle-fa-button:focus {
+    outline: 2px solid #c6dd41;
+    outline-offset: 2px;
+  }
+</style>

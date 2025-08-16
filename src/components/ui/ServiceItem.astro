@@ -1,0 +1,73 @@
+---
+import CircleIcon from './CircleIcon.astro';
+import OptimizedImage from './OptimizedImage.astro';
+import type { IconName } from '../../utils/icons.js';
+
+export interface Props {
+  iconName?: IconName | string;
+  imageFileName?: string;
+  header: string;
+  content: string;
+}
+
+const { iconName, imageFileName, header, content } = Astro.props;
+---
+
+<div class='service-item'>
+  {iconName && <CircleIcon iconName={iconName} size='4rem' />}
+
+  {
+    imageFileName && (
+      <OptimizedImage
+        src={`/images/${imageFileName}`}
+        alt={header}
+        class='service-item-image'
+        width={128}
+        height={128}
+      />
+    )
+  }
+
+  <h4 class='service-item-heading'>{header}</h4>
+  <p class='text-muted'>{content}</p>
+</div>
+
+<style lang='scss'>
+  @import '../../styles/global.scss';
+
+  .service-item {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .circle-fa-button {
+    width: 128px;
+    height: 128px;
+    background: var(--primary-color, #c6dd41);
+    border-radius: 100%;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .service-item-image {
+    width: 128px;
+    height: 128px;
+    margin: auto;
+    margin-bottom: 1rem;
+  }
+
+  .service-item-heading {
+    margin: 15px 0;
+    text-transform: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .text-muted {
+    color: #6c757d;
+    line-height: 1.6;
+  }
+</style>

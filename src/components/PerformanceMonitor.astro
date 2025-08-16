@@ -1,0 +1,222 @@
+---
+/**
+ * Performance monitoring component for Core Web Vitals tracking
+ * Only loads in production environment
+ */
+
+export interface Props {
+  enableTracking?: boolean;
+  trackingId?: string;
+}
+
+const { 
+  enableTracking = false,
+  trackingId 
+} = Astro.props;
+
+const isProduction = import.meta.env.PROD;
+const shouldTrack = enableTracking && isProduction;
+---
+
+{shouldTrack && (
+  <script is:inline define:vars={{ trackingId }}>
+    // Core Web Vitals tracking with enhanced metrics
+    (function() {
+      // Performance metrics collection
+      const metrics = {
+        lcp: null,
+        fid: null,
+        cls: null,
+        fcp: null,
+        ttfb: null
+      };
+
+      // Send metrics to analytics (customize as needed)
+      function sendMetric(name, value, id) {
+        console.log(`${name}:`, value);
+        
+        // Send to Google Analytics 4 if available
+        if (typeof gtag !== 'undefined' && trackingId) {
+          gtag('event', name, {
+            event_category: 'Web Vitals',
+            event_label: id,
+            value: Math.round(value),
+            non_interaction: true,
+          });
+        }
+        
+        // Send to custom analytics endpoint
+        if (window.customAnalytics) {
+          window.customAnalytics.track(name, {
+            value: value,
+            id: id,
+            url: window.location.href,
+            timestamp: Date.now()
+          });
+        }
+      }
+
+      // Largest Contentful Paint (LCP)
+      function measureLCP() {
+        new PerformanceObserver((entryList) => {
+          const entries = entryList.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          
+          metrics.lcp = lastEntry.startTime;
+          sendMetric('LCP', lastEntry.startTime, lastEntry.id);
+          
+          // Mark LCP element for debugging
+          if (lastEntry.element) {
+            lastEntry.element.setAttribute('data-lcp', 'true');
+          }
+        }).observe({ entryTypes: ['largest-contentful-paint'] });
+      }
+
+      // First Input Delay (FID)
+      function measureFID() {
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            const fidValue = entry.processingStart - entry.startTime;
+            metrics.fid = fidValue;
+            sendMetric('FID', fidValue, entry.name);
+          }
+        }).observe({ entryTypes: ['first-input'] });
+      }
+
+      // Cumulative Layout Shift (CLS)
+      function measureCLS() {
+        let clsValue = 0;
+        let sessionValue = 0;
+        let sessionEntries = [];
+
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            // Only count layout shifts without recent input
+            if (!entry.hadRecentInput) {
+              const firstSessionEntry = sessionEntries[0];
+              const lastSessionEntry = sessionEntries[sessionEntries.length - 1];
+
+              // If the entry occurred less than 1 second after the previous entry
+              // and less than 5 seconds after the first entry in the session,
+              // include the entry in the current session. Otherwise, start a new session.
+              if (sessionValue &&
+                  entry.startTime - lastSessionEntry.startTime < 1000 &&
+                  entry.startTime - firstSessionEntry.startTime < 5000) {
+                sessionValue += entry.value;
+                sessionEntries.push(entry);
+              } else {
+                sessionValue = entry.value;
+                sessionEntries = [entry];
+              }
+
+              // If the current session value is larger than the current CLS value,
+              // update CLS and the entries contributing to it.
+              if (sessionValue > clsValue) {
+                clsValue = sessionValue;
+                metrics.cls = clsValue;
+                sendMetric('CLS', clsValue, 'session');
+              }
+            }
+          }
+        }).observe({ entryTypes: ['layout-shift'] });
+      }
+
+      // First Contentful Paint (FCP)
+      function measureFCP() {
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            if (entry.name === 'first-contentful-paint') {
+              metrics.fcp = entry.startTime;
+              sendMetric('FCP', entry.startTime, 'first-contentful-paint');
+            }
+          }
+        }).observe({ entryTypes: ['paint'] });
+      }
+
+      // Time to First Byte (TTFB)
+      function measureTTFB() {
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            if (entry.entryType === 'navigation') {
+              const ttfb = entry.responseStart - entry.requestStart;
+              metrics.ttfb = ttfb;
+              sendMetric('TTFB', ttfb, 'navigation');
+            }
+          }
+        }).observe({ entryTypes: ['navigation'] });
+      }
+
+      // Resource loading performance
+      function measureResourceTiming() {
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            // Track slow resources (> 1 second)
+            if (entry.duration > 1000) {
+              sendMetric('Slow Resource', entry.duration, entry.name);
+            }
+            
+            // Track large resources (> 1MB)
+            if (entry.transferSize > 1024 * 1024) {
+              sendMetric('Large Resource', entry.transferSize, entry.name);
+            }
+          }
+        }).observe({ entryTypes: ['resource'] });
+      }
+
+      // Long task monitoring
+      function measureLongTasks() {
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            sendMetric('Long Task', entry.duration, entry.name);
+          }
+        }).observe({ entryTypes: ['longtask'] });
+      }
+
+      // Initialize all measurements
+      function initPerformanceTracking() {
+        try {
+          measureLCP();
+          measureFID();
+          measureCLS();
+          measureFCP();
+          measureTTFB();
+          measureResourceTiming();
+          measureLongTasks();
+          
+          // Send summary after page load
+          window.addEventListener('load', () => {
+            setTimeout(() => {
+              sendMetric('Page Load Complete', performance.now(), 'summary');
+              
+              // Log all collected metrics
+              console.log('Performance Metrics Summary:', metrics);
+            }, 1000);
+          });
+          
+        } catch (error) {
+          console.warn('Performance tracking initialization failed:', error);
+        }
+      }
+
+      // Start tracking when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPerformanceTracking);
+      } else {
+        initPerformanceTracking();
+      }
+
+      // Expose metrics for debugging
+      window.performanceMetrics = metrics;
+    })();
+  </script>
+)}
+
+<!-- Performance hints for critical resources -->
+{shouldTrack && (
+  <script is:inline>
+    // Mark critical performance milestones
+    if (window.performance && window.performance.mark) {
+      window.performance.mark('performance-monitor-loaded');
+    }
+  </script>
+)}

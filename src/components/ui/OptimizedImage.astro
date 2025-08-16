@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import { getImageAttributes, isExternalImage, getDefaultImageSize, generateSrcSet } from '../../utils/images';
+
+export interface Props {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+  quality?: number;
+  format?: 'webp' | 'avif' | 'png' | 'jpg';
+  priority?: boolean;
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+  src,
+  alt = '',
+  width,
+  height,
+  class: className,
+  loading = 'lazy',
+  sizes,
+  quality = 85,
+  format = 'webp',
+  priority = false,
+  fetchpriority = 'auto',
+} = Astro.props;
+
+const imageAttrs = getImageAttributes(src, alt, width, height);
+const defaultSize = getDefaultImageSize(src);
+
+// 幅と高さが指定されていない場合はデフォルトサイズを使用
+const finalWidth = imageAttrs.width || defaultSize.width;
+const finalHeight = imageAttrs.height || defaultSize.height;
+
+// 優先度の高い画像（Above the fold）の場合はeager loading
+const finalLoading = priority ? 'eager' : loading;
+const finalFetchPriority = priority ? 'high' : fetchpriority;
+
+// レスポンシブ画像のためのsizes属性を自動生成
+const responsiveSizes = sizes || generateSrcSet(finalWidth);
+---
+
+{
+  isExternalImage(src) ? (
+    <!-- 外部画像の場合は通常のimgタグを使用 -->
+    <img
+      src={imageAttrs.src}
+      alt={imageAttrs.alt}
+      width={finalWidth}
+      height={finalHeight}
+      loading={finalLoading}
+      decoding="async"
+      fetchpriority={finalFetchPriority}
+      class={className}
+      style={`aspect-ratio: ${finalWidth} / ${finalHeight};`}
+    />
+  ) : (
+    <!-- ローカル画像の場合はAstroのImageコンポーネントを使用 -->
+    <Image
+      src={imageAttrs.src}
+      alt={imageAttrs.alt}
+      width={finalWidth}
+      height={finalHeight}
+      loading={finalLoading}
+      quality={quality}
+      sizes={responsiveSizes}
+      class={className}
+      format={format}
+      fetchpriority={finalFetchPriority}
+      style={`aspect-ratio: ${finalWidth} / ${finalHeight};`}
+    />
+  )
+}

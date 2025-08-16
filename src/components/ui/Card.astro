@@ -1,0 +1,250 @@
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  variant?: 'default' | 'image-overlay' | 'hero';
+  className?: string;
+  imageFileName?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  header?: string;
+  subheader?: string;
+  textColor?: 'light' | 'dark';
+}
+
+const {
+  variant = 'default',
+  className = '',
+  imageFileName,
+  imageSrc,
+  imageAlt,
+  header,
+  subheader,
+  textColor = 'dark',
+} = Astro.props;
+
+const cardClasses = [
+  'card',
+  variant === 'image-overlay'
+    ? 'image-card bg-dark text-white text-center'
+    : '',
+  variant === 'hero' ? 'hero-card' : '',
+  textColor === 'light' ? 'text-white' : 'text-dark',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+// For image-overlay variant, we need to handle the image path
+let finalImageSrc = imageSrc;
+if (imageFileName && !imageSrc) {
+  // In Astro, we'll use the public folder for images
+  finalImageSrc = `/images/${imageFileName}`;
+}
+---
+
+<div class={cardClasses}>
+  {
+    (variant === 'image-overlay' || variant === 'hero') && finalImageSrc && (
+      <div class='card-image-container'>
+        <img
+          src={finalImageSrc}
+          alt={imageAlt || header || subheader || ''}
+          class='card-image'
+        />
+        <div class='card-img-overlay'>
+          <div class='container'>
+            <div class='intro-text'>
+              {subheader && <div class='intro-lead-in'>{subheader}</div>}
+              {header && (
+                <div class='intro-heading text-uppercase'>{header}</div>
+              )}
+              <slot name='extra-info' />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    variant === 'default' && (
+      <div class='card-body'>
+        {finalImageSrc && (
+          <img
+            src={finalImageSrc}
+            alt={imageAlt || header || ''}
+            class='card-img-top'
+          />
+        )}
+        {header && <h5 class='card-title'>{header}</h5>}
+        {subheader && <p class='card-text'>{subheader}</p>}
+        <slot />
+      </div>
+    )
+  }
+</div>
+
+<style lang='scss'>
+  .card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.375rem;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-title {
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    font-family:
+      'Montserrat',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif,
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      'Noto Color Emoji';
+  }
+
+  .card-text {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Image Card Styles (from ImageCard.scss) */
+  .image-card {
+    position: relative;
+    height: 491px;
+
+    .card-image-container {
+      position: relative;
+      height: 100%;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 491px;
+      object-fit: cover;
+    }
+
+    .card-img-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    .intro-text {
+      padding-top: 150px;
+      padding-bottom: 100px;
+
+      .intro-lead-in {
+        font-size: 22px;
+        font-style: italic;
+        line-height: 22px;
+        margin-bottom: 25px;
+        text-shadow:
+          100px 100px 20px #f5fa9e,
+          -14px -14px 20px #f5fa9e;
+        font-family:
+          'Roboto Slab',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          'Helvetica Neue',
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          'Noto Color Emoji';
+      }
+
+      .intro-heading {
+        font-size: 50px;
+        font-weight: 700;
+        line-height: 50px;
+        margin-bottom: 25px;
+        font-family:
+          'Montserrat',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          'Helvetica Neue',
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          'Noto Color Emoji';
+      }
+    }
+  }
+
+  /* Responsive styles */
+  @media (min-width: 768px) {
+    .image-card {
+      height: 759px;
+
+      .card-image {
+        height: 759px;
+      }
+
+      .intro-text {
+        padding-top: 300px;
+        padding-bottom: 200px;
+
+        .intro-lead-in {
+          font-size: 40px;
+          font-weight: 600;
+          font-style: italic;
+          line-height: 40px;
+          margin-bottom: 25px;
+          color: rgba(245, 241, 8, 0.8);
+          text-shadow:
+            100px 100px 20px #f5fa9e,
+            -14px -14px 20px #f5fa9e;
+        }
+
+        .intro-heading {
+          font-size: 75px;
+          font-weight: 700;
+          line-height: 75px;
+          margin-bottom: 50px;
+          box-sizing: border-box;
+          background-color: #f5f6f84d;
+          box-shadow:
+            20px 20px 20px rgb(235, 241, 142),
+            -14px -14px 20px rgb(247, 245, 124);
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import { getIconClass, type IconName } from '../../utils/icons.js';
+
+export interface Props {
+  name: IconName | string;
+  class?: string;
+  size?: string | number;
+  inverse?: boolean;
+  'aria-label'?: string;
+}
+
+const {
+  name,
+  class: className = '',
+  size = '1em',
+  inverse = false,
+  'aria-label': ariaLabel,
+} = Astro.props;
+
+const iconClass = getIconClass(name as IconName);
+const sizeStyle = typeof size === 'number' ? `${size}rem` : size;
+const inverseClass = inverse ? 'fa-inverse' : '';
+---
+
+<i
+  class={`${iconClass} ${inverseClass} ${className}`}
+  style={`font-size: ${sizeStyle};`}
+  aria-label={ariaLabel}
+  role={ariaLabel ? 'img' : undefined}></i>

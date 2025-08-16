@@ -5,10 +5,34 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:analyze": "astro build",
+    "build:verify": "npm run verify-deployment && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:all": "npm run test && npm run test:e2e",
+    "type-check": "astro check",
+    "analyze": "echo 'Bundle analysis - check dist/ folder for generated assets'",
+    "lighthouse": "echo 'Run lighthouse manually: npx lighthouse http://localhost:4321'",
+    "perf:audit": "npm run build && echo 'Performance audit complete - check dist/ folder'",
+    "verify-deployment": "node scripts/verify-deployment.js"
   },
   "dependencies": {
-    "astro": "^5.12.9"
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.4.2",
+    "airtable": "^0.12.2",
+    "astro": "^5.12.9",
+    "bootstrap": "^5.2.0",
+    "sass": "^1.90.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/airtable": "^0.10.0",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   }
 }

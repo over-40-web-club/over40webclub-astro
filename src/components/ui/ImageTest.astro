@@ -1,0 +1,161 @@
+---
+import OptimizedImage from './OptimizedImage.astro';
+---
+
+<div class='image-test'>
+  <h2>画像移行テスト</h2>
+
+  <!-- ヘッダー背景画像のテスト -->
+  <div class='test-section'>
+    <h3>ヘッダー背景画像</h3>
+    <OptimizedImage
+      src='header-bg.jpg'
+      alt='ヘッダー背景'
+      width={600}
+      height={300}
+      class='img-fluid rounded'
+    />
+  </div>
+
+  <!-- ポートフォリオサムネイルのテスト -->
+  <div class='test-section'>
+    <h3>ポートフォリオサムネイル</h3>
+    <div class='row'>
+      <div class='col-md-4'>
+        <OptimizedImage
+          src='portfolio/01-thumbnail.jpg'
+          alt='ポートフォリオ項目1'
+          class='img-fluid rounded'
+        />
+      </div>
+      <div class='col-md-4'>
+        <OptimizedImage
+          src='portfolio/02-thumbnail.jpg'
+          alt='ポートフォリオ項目2'
+          class='img-fluid rounded'
+        />
+      </div>
+      <div class='col-md-4'>
+        <OptimizedImage
+          src='portfolio/03-thumbnail.jpg'
+          alt='ポートフォリオ項目3'
+          class='img-fluid rounded'
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- チームメンバー画像のテスト -->
+  <div class='test-section'>
+    <h3>チームメンバー画像</h3>
+    <div class='row'>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='team/pitang.jpg'
+          alt='ピータン'
+          class='img-fluid rounded-circle'
+        />
+        <p class='text-center mt-2'>ピータン</p>
+      </div>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='team/yoko.jpg'
+          alt='yoko'
+          class='img-fluid rounded-circle'
+        />
+        <p class='text-center mt-2'>yoko</p>
+      </div>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='team/son.jpg'
+          alt='そん'
+          class='img-fluid rounded-circle'
+        />
+        <p class='text-center mt-2'>そん</p>
+      </div>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='team/kunshi.jpg'
+          alt='訓志'
+          class='img-fluid rounded-circle'
+        />
+        <p class='text-center mt-2'>訓志</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ロゴ画像のテスト -->
+  <div class='test-section'>
+    <h3>クライアントロゴ</h3>
+    <div class='row'>
+      <div class='col-md-3'>
+        <OptimizedImage src='logos/envato.jpg' alt='Envato' class='img-fluid' />
+      </div>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='logos/designmodo.jpg'
+          alt='Designmodo'
+          class='img-fluid'
+        />
+      </div>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='logos/themeforest.jpg'
+          alt='ThemeForest'
+          class='img-fluid'
+        />
+      </div>
+      <div class='col-md-3'>
+        <OptimizedImage
+          src='logos/creative-market.jpg'
+          alt='Creative Market'
+          class='img-fluid'
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- SVGロゴのテスト -->
+  <div class='test-section'>
+    <h3>SVGロゴ</h3>
+    <OptimizedImage
+      src='logo.svg'
+      alt='Over 40 Web Club ロゴ'
+      width={200}
+      height={200}
+      class='img-fluid'
+    />
+  </div>
+</div>
+
+<style>
+  .image-test {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .test-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .test-section h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    border-bottom: 2px solid #c6dd41;
+    padding-bottom: 0.5rem;
+  }
+
+  .row {
+    margin-top: 1rem;
+  }
+
+  .col-md-3,
+  .col-md-4 {
+    margin-bottom: 1rem;
+  }
+</style>

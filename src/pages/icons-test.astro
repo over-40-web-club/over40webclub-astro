@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IconShowcase from '../components/ui/IconShowcase.astro';
+import Icon from '../components/ui/Icon.astro';
+import SocialIcon from '../components/ui/SocialIcon.astro';
+import CircleIcon from '../components/ui/CircleIcon.astro';
+---
+
+<BaseLayout
+  title='Icon System Test - Over 40 Web Club'
+  description='Testing the icon system implementation'
+>
+  <main class='container py-5'>
+    <div class='row'>
+      <div class='col-12'>
+        <h1 class='text-center mb-5'>Icon System Test</h1>
+
+        <!-- Basic Icon Usage -->
+        <section class='mb-5'>
+          <h2>Basic Icon Usage</h2>
+          <div class='d-flex gap-3 align-items-center mb-3'>
+            <Icon name='phone' />
+            <Icon name='envelope' size='1.5rem' />
+            <Icon name='github' size='2rem' />
+            <Icon name='twitter' size='2.5rem' />
+          </div>
+        </section>
+
+        <!-- Social Icons -->
+        <section class='mb-5'>
+          <h2>Social Icons</h2>
+          <div class='d-flex gap-2 mb-3'>
+            <SocialIcon platform='twitter' username='shijukarakun' />
+            <SocialIcon platform='github' username='example' />
+            <SocialIcon platform='linkedin' username='example' />
+            <SocialIcon platform='facebook' username='example' />
+          </div>
+        </section>
+
+        <!-- Circle Icons -->
+        <section class='mb-5'>
+          <h2>Circle Icons</h2>
+          <div class='d-flex gap-3 mb-3'>
+            <CircleIcon iconName='shopping-cart' />
+            <CircleIcon iconName='laptop' />
+            <CircleIcon iconName='lock' />
+          </div>
+        </section>
+
+        <!-- Legacy Icon Names -->
+        <section class='mb-5'>
+          <h2>Legacy Icon Names (Backward Compatibility)</h2>
+          <div class='d-flex gap-3 align-items-center mb-3'>
+            <Icon name='PhoneIcon' />
+            <Icon name='TwitterIcon' size='1.5rem' />
+            <Icon name='ShoppingCartIcon' size='2rem' />
+            <Icon name='LaptopIcon' size='2.5rem' />
+          </div>
+        </section>
+
+        <!-- Icon Showcase by Category -->
+        <section class='mb-5'>
+          <h2>Solid Icons</h2>
+          <IconShowcase category='solid' size='1.5rem' />
+        </section>
+
+        <section class='mb-5'>
+          <h2>Brand Icons</h2>
+          <IconShowcase category='brand' size='1.5rem' />
+        </section>
+
+        <section class='mb-5'>
+          <h2>Legacy Icon Names</h2>
+          <IconShowcase category='legacy' size='1.5rem' />
+        </section>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 1200px;
+  }
+
+  section {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 2rem;
+  }
+
+  section:last-child {
+    border-bottom: none;
+  }
+
+  h1 {
+    color: var(--primary-color, #c6dd41);
+    font-family: var(--font-heading);
+  }
+
+  h2 {
+    color: #495057;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+  }
+</style>

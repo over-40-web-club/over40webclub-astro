@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '../../utils/icons.js';
+
+export interface Props {
+  iconName: IconName | string;
+  text: string;
+  class?: string;
+  iconSize?: string | number;
+  gap?: string;
+}
+
+const {
+  iconName,
+  text,
+  class: className = '',
+  iconSize = '1em',
+  gap = '0.5rem',
+} = Astro.props;
+---
+
+<span class={`icon-text ${className}`} style={`gap: ${gap};`}>
+  <Icon name={iconName} size={iconSize} class='icon' />
+  <span class='text'>{text}</span>
+</span>
+
+<style>
+  .icon-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .icon-text .icon {
+    flex-shrink: 0;
+  }
+
+  .icon-text .text {
+    line-height: 1;
+  }
+</style>

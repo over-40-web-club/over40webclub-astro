@@ -1,0 +1,305 @@
+---
+import { siteConfig } from '../config/site';
+import { generateGoogleFontsUrl } from '../utils/fonts';
+import {
+  PRECONNECT_DOMAINS,
+  CORE_WEB_VITALS_CONFIG,
+  WEB_VITALS_SCRIPT,
+} from '../utils/performance';
+import SEO from '../components/SEO.astro';
+import '../styles/global.scss';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+  noarchive?: boolean;
+  nosnippet?: boolean;
+  noimageindex?: boolean;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  tags?: string[];
+  breadcrumbs?: Array<{ name: string; url: string }>;
+  faqs?: Array<{ question: string; answer: string }>;
+  enableWebVitalsTracking?: boolean;
+  criticalImages?: string[];
+}
+
+const {
+  title,
+  description,
+  image,
+  noindex = false,
+  nofollow = false,
+  noarchive = false,
+  nosnippet = false,
+  noimageindex = false,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  tags,
+  breadcrumbs,
+  faqs,
+  enableWebVitalsTracking = false,
+  criticalImages = [],
+} = Astro.props;
+
+const googleFontsUrl = generateGoogleFontsUrl();
+const isProduction = import.meta.env.PROD;
+---
+
+<!doctype html>
+<html lang={siteConfig.defaultLang}>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta name='generator' content={Astro.generator} />
+
+    <!-- Performance optimizations -->
+    {
+      PRECONNECT_DOMAINS.map((domain) => (
+        <link rel='preconnect' href={domain} crossorigin />
+      ))
+    }
+
+    <!-- DNS prefetch for external resources -->
+    <link rel='dns-prefetch' href='https://cdnjs.cloudflare.com' />
+    <link rel='dns-prefetch' href='https://cdn.jsdelivr.net' />
+
+    <!-- Critical resource preloads -->
+    {
+      CORE_WEB_VITALS_CONFIG.lcp.preloadResources.map((resource) => (
+        <link
+          rel='preload'
+          href={resource.href}
+          as={resource.as}
+          type={resource.type}
+          crossorigin={resource.crossorigin}
+        />
+      ))
+    }
+
+    <!-- Critical images preload -->
+    {
+      criticalImages.map((imageSrc) => (
+        <link rel='preload' as='image' href={imageSrc} fetchpriority='high' />
+      ))
+    }
+
+    <!-- Comprehensive SEO Meta Tags and Structured Data -->
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+      tags={tags}
+      noindex={noindex}
+      nofollow={nofollow}
+      noarchive={noarchive}
+      nosnippet={nosnippet}
+      noimageindex={noimageindex}
+      breadcrumbs={breadcrumbs}
+      faqs={faqs}
+    />
+
+    <!-- Critical font preload with font-display: swap -->
+    <link
+      rel='preload'
+      href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
+      as='style'
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
+        rel='stylesheet'
+      />
+    </noscript>
+
+    <!-- All fonts with optimized loading and font-display: swap -->
+    <link
+      href={googleFontsUrl}
+      rel='stylesheet'
+      media='print'
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link href={googleFontsUrl} rel='stylesheet' />
+    </noscript>
+
+    <!-- FontAwesome CSS with optimized loading -->
+    <link
+      rel='preload'
+      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+      as='style'
+      onload="this.onload=null;this.rel='stylesheet'"
+      integrity='sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=='
+      crossorigin='anonymous'
+      referrerpolicy='no-referrer'
+    />
+    <noscript>
+      <link
+        rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+        integrity='sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=='
+        crossorigin='anonymous'
+        referrerpolicy='no-referrer'
+      />
+    </noscript>
+
+    <!-- Critical CSS inlining hint -->
+    <style>
+      /* Critical CSS for above-the-fold content */
+      .fonts-loading * {
+        visibility: hidden;
+      }
+      .fonts-loaded * {
+        visibility: visible;
+      }
+
+      /* Prevent layout shift during font loading */
+      body {
+        font-display: swap;
+      }
+
+      /* Critical button styles to prevent CLS */
+      .btn {
+        display: inline-block;
+        font-weight: 700;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition:
+          color 0.15s ease-in-out,
+          background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out;
+      }
+
+      .btn-primary {
+        color: #fff;
+        background-color: rgb(198, 221, 65);
+        border-color: rgb(198, 221, 65);
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+
+    <!-- Performance optimized scripts -->
+    <script is:inline>
+      // Performance optimization: Add fonts-loading class initially
+      document.documentElement.classList.add('fonts-loading');
+
+      // Enhanced font loading detection with performance monitoring
+      function detectFontLoad() {
+        const startTime = performance.now();
+
+        if ('fonts' in document) {
+          Promise.all([
+            document.fonts.load('400 1em Montserrat'),
+            document.fonts.load('700 1em Montserrat'),
+            document.fonts.load('400 1em "Roboto Slab"'),
+            document.fonts.load('700 1em "Roboto Slab"'),
+            document.fonts.load('400 1em "Kaushan Script"'),
+          ])
+            .then(function () {
+              const loadTime = performance.now() - startTime;
+              console.log('Fonts loaded in:', loadTime + 'ms');
+
+              document.documentElement.classList.add('fonts-loaded');
+              document.documentElement.classList.remove('fonts-loading');
+
+              // Mark font loading complete for performance tracking
+              if (window.performance && window.performance.mark) {
+                window.performance.mark('fonts-loaded');
+              }
+            })
+            .catch(function (error) {
+              console.warn('Font loading failed:', error);
+              // Fallback if font loading fails
+              setTimeout(function () {
+                document.documentElement.classList.add('fonts-loaded');
+                document.documentElement.classList.remove('fonts-loading');
+              }, 3000);
+            });
+        } else {
+          // Fallback for browsers without Font Loading API
+          setTimeout(function () {
+            document.documentElement.classList.add('fonts-loaded');
+            document.documentElement.classList.remove('fonts-loading');
+          }, 1000);
+        }
+      }
+
+      // Initialize font loading with performance optimization
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', detectFontLoad);
+      } else {
+        detectFontLoad();
+      }
+
+      // Lazy loading intersection observer for images
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                  img.src = img.dataset.src;
+                  img.removeAttribute('data-src');
+                }
+                if (img.dataset.srcset) {
+                  img.srcset = img.dataset.srcset;
+                  img.removeAttribute('data-srcset');
+                }
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+              }
+            });
+          },
+          {
+            rootMargin: '50px 0px',
+            threshold: 0.01,
+          }
+        );
+
+        // Observe all lazy images
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('img[data-src]').forEach((img) => {
+            imageObserver.observe(img);
+          });
+        });
+      }
+    </script>
+
+    <!-- Web Vitals tracking (production only) -->
+    {
+      enableWebVitalsTracking && isProduction && (
+        <script is:inline set:html={WEB_VITALS_SCRIPT} />
+      )
+    }
+
+    <!-- Bootstrap JS with optimized loading -->
+    <script
+      src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'
+      integrity='sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa'
+      crossorigin='anonymous'
+      defer
+      is:inline></script>
+  </body>
+</html>

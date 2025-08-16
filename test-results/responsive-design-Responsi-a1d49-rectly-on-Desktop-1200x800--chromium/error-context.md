@@ -1,0 +1,334 @@
+# Page snapshot
+
+```yaml
+- navigation:
+  - link "✨Over 40 Web Club ✨":
+    - /url: "#page-top"
+  - list:
+    - listitem:
+      - link "クラブについて":
+        - /url: "#about"
+    - listitem:
+      - link "ポートフォリオ":
+        - /url: "#portfolio"
+    - listitem:
+      - link "沿革":
+        - /url: "#history"
+    - listitem:
+      - link "チーム":
+        - /url: "#team"
+    - listitem:
+      - link "クライアント":
+        - /url: "#clients"
+    - listitem:
+      - link "コンタクト":
+        - /url: "#contact"
+- main:
+  - text: Over 40 Web Club お会いできて光栄です
+  - link "Over 40 Web Clubとは":
+    - /url: "#クラブについて"
+  - heading "Over 40 Web Clubとは" [level=2]
+  - heading "Web開発の勉強をしている40歳以上の方が、情報交換したり、助けあったり、交流を深めたりするためのオンラインコミュニティです。無料で非公開となっています。趣旨をご理解いただける方は誰でも参加できます。" [level=3]
+  - text: 
+  - heading "中高年専門コミュニティ" [level=4]
+  - paragraph: メンバーのバックグランドは、現役エンジニア、専業主婦、働く主婦、元IBMプログラマー、元引きこもり(自称)、シェフ、海外からの参戦者とさまざまです。20代、30代の方が集まるコニュニティとは違います。皆様の自己紹介が濃く、時に苦く、ちょっとジーンときてしまうことも。
+  - text: 
+  - heading "主なチャンネル" [level=4]
+  - paragraph: 2020-09-28に設立したコミュニティです。随時改良していきますが、現在以下のチャンネルがございます。自己紹介、今日やること、将来の夢、勉強会、質問、雑談（好きな音楽、美と健康）、共同プロジェクト、成果物公開・・・
+  - text: 
+  - heading "勉強会" [level=4]
+  - paragraph: 人に教えるのはとても勉強になるので、オンラインで勉強会を開催しています。技術を競い合ったりマウントするのではなく・・・興味を持ったことをじっくり学べるようお互いにサポートしていきます。
+  - heading "ポートフォリオ" [level=2]
+  - heading "これまでの活動" [level=3]
+  - link "AstroとmicroCMSで作るシンプルコーポレートサイト +":
+    - /url: "#portfolio-modal-astroとmicrocmsで作るシンプルコーポレートサイト"
+    - img "AstroとmicroCMSで作るシンプルコーポレートサイト"
+    - text: +
+  - heading "AstroとmicroCMSで作るシンプルコーポレートサイト" [level=4]
+  - paragraph: 2023年12月08日(金）21:00～22:30
+  - link "ヘッドレスCMSで爆速ブログ構築〜 +":
+    - /url: "#portfolio-modal-ヘッドレスcmsで爆速ブログ構築〜"
+    - img "ヘッドレスCMSで爆速ブログ構築〜"
+    - text: +
+  - heading "ヘッドレスCMSで爆速ブログ構築〜" [level=4]
+  - paragraph: 2021年05月29日(土）15:00～16:00
+  - link "PHP 講座 シリーズで開催中 +":
+    - /url: "#portfolio-modal-php-講座-シリーズで開催中"
+    - img "PHP 講座 シリーズで開催中"
+    - text: +
+  - heading "PHP 講座 シリーズで開催中" [level=4]
+  - paragraph: 日程はSlackで確認 ！（クラブ限定）
+  - link "Gitpod入門 チームでコードを共有してみよう +":
+    - /url: "#portfolio-modal-gitpod入門-チームでコードを共有してみよう"
+    - img "Gitpod入門 チームでコードを共有してみよう"
+    - text: +
+  - heading "Gitpod入門 チームでコードを共有してみよう" [level=4]
+  - paragraph: 4月25日(日)（クラブ限定）
+  - link "40代転職を実現したクラブのメンバーにその経験と戦略を伺います +":
+    - /url: "#portfolio-modal-40代転職を実現したクラブのメンバーにその経験と戦略を伺います"
+    - img "40代転職を実現したクラブのメンバーにその経験と戦略を伺います"
+    - text: +
+  - heading "40代転職を実現したクラブのメンバーにその経験と戦略を伺います" [level=4]
+  - paragraph: 3月21日(日)（クラブ限定）
+  - link "Tailwind CSS 入門 +":
+    - /url: "#portfolio-modal-tailwind-css-入門"
+    - img "Tailwind CSS 入門"
+    - text: +
+  - heading "Tailwind CSS 入門" [level=4]
+  - paragraph: 3月14日(日)（クラブ限定）
+  - link "無料でデプロイしてみよう。 +":
+    - /url: "#portfolio-modal-無料でデプロイしてみよう。"
+    - img "無料でデプロイしてみよう。"
+    - text: +
+  - heading "無料でデプロイしてみよう。" [level=4]
+  - paragraph: 3月6日(日)Connpass イベント③ 初学者でもサクッとできる方法を紹介します。
+  - link "【ヘッドレスWordPress入門】 +":
+    - /url: "#portfolio-modal-【ヘッドレスwordpress入門】"
+    - img "【ヘッドレスWordPress入門】"
+    - text: +
+  - heading "【ヘッドレスWordPress入門】" [level=4]
+  - paragraph: 2月21日(日)Connpass イベント② Gatsbyでサクッとブログを高速化！
+  - link "WordPressもいいけどGatsbyもね +":
+    - /url: "#portfolio-modal-wordpressもいいけどgatsbyもね"
+    - img "WordPressもいいけどGatsbyもね"
+    - text: +
+  - heading "WordPressもいいけどGatsbyもね" [level=4]
+  - paragraph: Connpass イベント①
+  - link "Reactコース ～ その①〜⑤ +":
+    - /url: "#portfolio-modal-reactコース-～-その①〜⑤"
+    - img "Reactコース ～ その①〜⑤"
+    - text: +
+  - heading "Reactコース ～ その①〜⑤" [level=4]
+  - paragraph: Reactの学習会を開催しています。
+  - link "Gatsby + AirTable初心者学習会 +":
+    - /url: "#portfolio-modal-gatsby-+-airtable初心者学習会"
+    - img "Gatsby + AirTable初心者学習会"
+    - text: +
+  - heading "Gatsby + AirTable初心者学習会" [level=4]
+  - paragraph: Airtableとgatsby-airtable-listingの応用 ～ クラウドデータベースから静的サイトをさくっと作ってみよう
+  - link "Gatsby学習会 +":
+    - /url: "#portfolio-modal-gatsby学習会"
+    - img "Gatsby学習会"
+    - text: +
+  - heading "Gatsby学習会" [level=4]
+  - paragraph: 第1回 Gatsbyとは- シンプルなページを公開しました。
+  - heading "沿革" [level=2]
+  - heading "Web開発の勉強をしている40歳以上の方が、情報交換したり、助けあったり、交流を深めたりするためのオンラインコミュニティ" [level=3]
+  - list:
+    - listitem:
+      - img "2020年9月28日"
+      - heading "2020年9月28日" [level=4]
+      - heading "Over 40 Web Club発足" [level=4]
+      - paragraph: ピータンが発起人となりクラブを立ち上げる
+    - listitem:
+      - img "2020年10月"
+      - heading "2020年10月" [level=4]
+      - heading "初めてのプログラミング学習会を開催" [level=4]
+      - paragraph: 静的サイトジェネレーターGatsby+AirTableについて学ぶ
+    - listitem:
+      - img "2020年11月-12月"
+      - heading "2020年11月-12月" [level=4]
+      - heading "Reactの学習会をシリーズで開催" [level=4]
+      - paragraph: 基礎編でブックプロジェクト作成したり、useState、useEffectを使用したプロジェクトを作成しました
+    - listitem:
+      - img "2020年12月"
+      - heading "2020年12月" [level=4]
+      - heading "ポモドーロタイマー開発" [level=4]
+      - paragraph: 管理人ピータンの呼びかけにより、ポモドーロタイマー開発大会実施
+    - listitem:
+      - img "2021年2月"
+      - heading "2021年2月" [level=4]
+      - heading "Connpassイベントで活動を開始" [level=4]
+      - paragraph: そんほんす さんを講師に「WordPressもいいけど、Gatsbyもね」/ 【超入門】Webサイトをデプロイしよう！主催
+    - listitem:
+      - img "2021年3月、10月"
+      - heading "2021年3月、10月" [level=4]
+      - heading "Slackお引っ越し" [level=4]
+      - paragraph: 活発な活動の記録を残すために、続Over 40 Web Clubとして新Slackにお引っ越ししました
+    - listitem:
+      - img "2021年"
+      - heading "2021年" [level=4]
+      - heading "クラブの価値を高める活動続々実施中" [level=4]
+      - paragraph: Gatsby, ヘッドレスWordPress、サイトのデプロイ、Tailwind CSS、40代で転職の戦略、PHP講座、Next.js、CSSカスタムプロパティ等のイベントを実施。
+    - listitem:
+      - img "2022年"
+      - heading "2022年" [level=4]
+      - heading "先駆者からの情報提供も続々" [level=4]
+      - paragraph: 先輩フリーランス、企業案件を完成した方、ベテランデザイナーかたからの貴重な勉強会等を開催。6月には4つ目のSlackに引っ越し。8月にはDiscordに引っ越し。
+    - listitem:
+      - heading "ご一緒 に どうぞ" [level=4]
+  - heading "チーム" [level=2]
+  - heading "わたしは学び続けます。あなたもご一緒に😊" [level=3]
+  - img "ピータン"
+  - heading "ピータン" [level=4]
+  - paragraph: Webアプリの個人開発ができるようになるため2019年1月から独学(JS, TS, React等）。2023年1月からWeb開発企業で働いています。趣味はレーシングシミュレータと週末車中泊旅。
+  - link "Homepage profile":
+    - /url: https://linktr.ee/pitang1965
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/pitang1965
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/pitang1965
+    - text: 
+  - link "Instagram profile":
+    - /url: https://instagram.com/pitang1965
+    - text: 
+  - img "そんほんす"
+  - heading "そんほんす" [level=4]
+  - paragraph: 2023年3月教員を退職。コーディングメインのウェブ制作の個人事業主です。
+  - link "Homepage profile":
+    - /url: https://portfolio.horumont.info
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/horumont
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/sonho463
+    - text: 
+  - link "Instagram profile":
+    - /url: https://instagram.com/horumont
+    - text: 
+  - img "ながたく"
+  - heading "ながたく" [level=4]
+  - paragraph: Jamstack サイトをしっかり構築できるようになるのが当面の目標です。
+  - link "Twitter profile":
+    - /url: https://twitter.com/_return_null_
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/takunagai
+    - text: 
+  - img "だむごん"
+  - heading "だむごん" [level=4]
+  - paragraph: 早期退職後フィリピン移住。 MovableTypeというレガシーなCMS保守案件他に従事中。 そしてCakePHPという、これまたレガシーなフレームワーク案件を制覇すべく目下勉強中でアリマス。
+  - link "Twitter profile":
+    - /url: https://twitter.com/Damgoweb
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/damgoweb
+    - text: 
+  - link "Youtube profile":
+    - /url: https://www.youtube.com/channel/UCaBOOSvzN8kYUVHXenS45lw/featured
+    - text: 
+  - img "訓志"
+  - heading "訓志" [level=4]
+  - paragraph: 20歳から水商売20年、40歳からプログラマになりました。 2019～：Web、PHP、JavaScriptなど。 東中野の駅前でバーを営んでいます。
+  - link "Twitter profile":
+    - /url: https://twitter.com/rude_rockers
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/ruderude
+    - text: 
+  - link "Youtube profile":
+    - /url: https://www.youtube.com/channel/UC7bRd41pMj_1QrtJ-2U7QcA
+    - text: 
+  - img "にゆ"
+  - heading "にゆ" [level=4]
+  - paragraph: 15年ほど専業主婦でしたが、40歳からWeb制作の勉強を開始！ 2年ほどHTML&CSS&WordPress案件に従事し、現在フリーランス歴4年目の40代主婦のフロントエンドエンジニアです。
+  - link "Twitter profile":
+    - /url: https://twitter.com/niyu1103
+    - text: 
+  - img "ふみ"
+  - heading "ふみ" [level=4]
+  - paragraph: 医療職の目線からシステム開発。プログラミングで医療を変えたい！！
+  - link "Homepage profile":
+    - /url: https://funxxfun.online/
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/boofumifumi
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/funxxfun
+    - text: 
+  - img "とっぷ"
+  - heading "とっぷ" [level=4]
+  - paragraph: Web制作者からフロントエンジニアにシフトチェンジを果たし、どこまで頑張れるかチャレンジしています。
+  - link "Twitter profile":
+    - /url: https://twitter.com/tktoproad
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/topaoad
+    - text: 
+  - img "りり"
+  - heading "りり" [level=4]
+  - paragraph: 現在はECサイトを主にコーディングやバナー・画像加工・商品登録など幅広くWEBにに関わる業務をしています。今後はWEBマーケも学び携わっていきます。好奇心旺盛なので色々楽しんで学びたいです
+  - link "Twitter profile":
+    - /url: https://twitter.com/koniroriris
+    - text: 
+  - img "あっがい"
+  - heading "あっがい" [level=4]
+  - paragraph: 主にLaravelで開発をしています。バックエンド寄りです。最近はPythonの資格試験、データ分析の勉強をしています。
+  - link "Twitter profile":
+    - /url: https://twitter.com/acguy731
+    - text: 
+  - img "みー"
+  - heading "みー" [level=4]
+  - paragraph: 自分のデザインに自信を持てるようになりたい。webのデザインも少しづつ参入していきたい🎵
+  - link "Twitter profile":
+    - /url: https://twitter.com/Mie_deza
+    - text: 
+  - img "おとかつ"
+  - heading "おとかつ" [level=4]
+  - paragraph: 30年勤めた会社を2022年退職。現在WEB制作のフリーランス。コロナで在宅が増え、自分の生き方を見直すことに。2025年60歳を迎えることから、これまで副業でやってきたライティングを軸に、WEB制作全体のスキルアップを図っています。html/css/javaScript/workdpress。2023年はデザイン力アップが課題。
+  - link "Homepage profile":
+    - /url: https://shinichi-miyazaki.website
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/eltaller2021web
+    - text: 
+  - link "Instagram profile":
+    - /url: https://instagram.com/el_taller_web
+    - text: 
+  - img "みくのすけ"
+  - heading "みくのすけ" [level=4]
+  - paragraph: 48で大学入学。その後web制作、WordPress、webデザインを学習し案件を獲得できるようになりました。現在の主な案件はコーディング、WordPress制作がほとんど。本当にやりたいことはフロントでReactで一本自作アプリ開発が目下の目標です。
+  - link "Homepage profile":
+    - /url: https://miku-nosuke.com/
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/miku_nosuke
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/iwk
+    - text: 
+  - link "Instagram profile":
+    - /url: https://instagram.com/miku_nosuke_
+    - text: 
+  - img "あべいさじ"
+  - heading "あべいさじ" [level=4]
+  - paragraph: 医学部受験の予備校講師→WEB制作→SES
+  - link "Homepage profile":
+    - /url: https://newsite-make.com/
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/tsurutaitit
+    - text: 
+  - img "りつ子"
+  - heading "りつ子" [level=4]
+  - paragraph: とうに40歳オーバーの時に実家家業のホームページを作ろう！から、WEBサイト制作の面白さに目覚め、ひたすら勉強 一目ぼれしたディレクター（女性）にアタックしたらいきなりフリーランスのコーダーに 発達障がいのディスレクシアにちょっと詳しい。GAAD Japan 2021/2022に2年連続で登壇 HTML/CSS/JS/PHP/After Effects
+  - link "Homepage profile":
+    - /url: https://ritsuko.link/
+    - text: 
+  - link "Twitter profile":
+    - /url: https://twitter.com/kabachadayo
+    - text: 
+  - link "Github profile":
+    - /url: https://github.com/RitukoIsibasi0222
+    - text: 
+  - paragraph: 未だかつて人類が経験したことのない長寿社会を、豊かにそして楽しく生きていくために、わたしは学び続けます。あなたもご一緒に😊✨
+  - heading "連絡方法" [level=2]
+  - heading "40歳以上で参加希望の方は、利用規約に記載の運営者までお問い合わせください。" [level=3]:
+    - text: 40歳以上で参加希望の方は、
+    - link "利用規約":
+      - /url: /terms
+    - text: に記載の運営者までお問い合わせください。
+- contentinfo:
+  - paragraph: Copyright © Over 40 Web Club ✨ 2024
+  - link "Twitter profile":
+    - /url: https://twitter.com/shijukarakun
+    - text: 
+  - link "プライバシーポリシー":
+    - /url: /privacy
+  - link "利用規約":
+    - /url: /terms
+```

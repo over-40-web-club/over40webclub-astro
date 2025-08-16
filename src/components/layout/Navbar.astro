@@ -1,0 +1,445 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from '../ui/Icon.astro';
+
+// Get navigation content
+const navigationEntries = await getCollection('navigation');
+const navData = navigationEntries[0]?.data || {
+  brand: '✨Over 40 Web Club ✨',
+  menuText: 'メニュー ',
+};
+
+// Get sections for navigation anchors
+const sections = await getCollection('sections');
+const sortedSections = sections
+  .filter((section) => section.data.published !== false && section.data.anchor)
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+const anchors = sortedSections.map((section) => ({
+  anchor: section.data.anchor,
+  slug: section.slug,
+}));
+---
+
+<nav class='navbar navbar-root navbar-expand-lg fixed-top' id='mainNav'>
+  <div class='container'>
+    <a class='navbar-brand cursor-pointer' href='#page-top' data-scroll-to-top>
+      {navData.brand}
+    </a>
+
+    <button
+      class='navbar-toggler'
+      type='button'
+      data-bs-toggle='collapse'
+      data-bs-target='#navbarResponsive'
+      aria-controls='navbarResponsive'
+      aria-expanded='false'
+      aria-label='Toggle navigation'
+    >
+      {navData.menuText}
+      <Icon name='bars' class='navbar-toggler-icon' />
+    </button>
+
+    <div class='collapse navbar-collapse' id='navbarResponsive'>
+      <ul class='navbar-nav text-uppercase ms-auto'>
+        {
+          anchors.map(({ anchor, slug }) => (
+            <li class='nav-item'>
+              <a
+                class='nav-link cursor-pointer'
+                href={`#${slug}`}
+                data-scroll-to={`#${slug}`}
+                data-nav-link
+              >
+                {anchor}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  import { initializeSmoothScroll } from '../../utils/smoothScroll';
+  import { initializeScrollMonitor } from '../../utils/scrollMonitor';
+
+  // Helper function to check if we're on mobile
+  function isMobile() {
+    return window.innerWidth < 992;
+  }
+
+  // Helper function to close mobile menu
+  function closeMobileMenu() {
+    if (isMobile()) {
+      const navbarCollapse = document.querySelector('#navbarResponsive');
+      if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+        const bsCollapse = new (window as any).bootstrap.Collapse(
+          navbarCollapse
+        );
+        bsCollapse.hide();
+      }
+    }
+  }
+
+  // Initialize navbar functionality
+  document.addEventListener('DOMContentLoaded', function () {
+    // 初期背景色を設定
+    const navbar = document.querySelector('#mainNav');
+    if (navbar && window.innerWidth >= 992) {
+      // 複数の方法で黒背景を強制設定
+      navbar.style.setProperty('background-color', '#212529', 'important');
+      navbar.style.setProperty('background', '#212529', 'important');
+      navbar.style.setProperty('background-image', 'none', 'important');
+
+      // CSS変数も上書き
+      navbar.style.setProperty('--bs-body-bg', '#212529');
+      navbar.style.setProperty('--bs-navbar-bg', '#212529');
+      navbar.style.setProperty('--bs-bg-opacity', '1');
+    }
+
+    // ウィンドウリサイズ時にも適用
+    window.addEventListener('resize', () => {
+      if (
+        navbar &&
+        window.innerWidth >= 992 &&
+        !navbar.classList.contains('navbar-shrink')
+      ) {
+        navbar.style.setProperty('background-color', '#212529', 'important');
+        navbar.style.setProperty('background', '#212529', 'important');
+      }
+    });
+
+    // MutationObserverで背景色の変更を監視
+    if (navbar && window.innerWidth >= 992) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (
+            mutation.type === 'attributes' &&
+            (mutation.attributeName === 'style' ||
+              mutation.attributeName === 'class')
+          ) {
+            if (!navbar.classList.contains('navbar-shrink')) {
+              navbar.style.setProperty(
+                'background-color',
+                '#212529',
+                'important'
+              );
+              navbar.style.setProperty('background', '#212529', 'important');
+              navbar.style.setProperty('--bs-body-bg', '#212529');
+              navbar.style.setProperty('--bs-navbar-bg', '#212529');
+            }
+          }
+        });
+      });
+
+      observer.observe(navbar, {
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+      });
+    }
+
+    // Initialize smooth scroll with custom options
+    initializeSmoothScroll({
+      duration: 800,
+      easing: 'easeInOutQuart',
+      offset: 100, // Account for fixed navbar
+    });
+
+    // Initialize scroll monitor for navbar shrinking and active link highlighting
+    const scrollMonitor = initializeScrollMonitor({
+      throttleMs: 166, // ~60fps (same as original useWindowOnScroll)
+      offset: 200, // Offset for active section detection
+    });
+
+    // Add callback for navbar shrinking
+    scrollMonitor.addCallback((scrollTop, activeSection) => {
+      const navbarCollapsible = document.body.querySelector('#mainNav');
+      if (navbarCollapsible) {
+        if (scrollTop > 100) {
+          navbarCollapsible.classList.add('navbar-shrink');
+          // 大画面でスクロール時の背景色を強制設定
+          if (window.innerWidth >= 992) {
+            navbarCollapsible.style.setProperty(
+              'background-color',
+              'rgba(33, 37, 41, 0.95)',
+              'important'
+            );
+            navbarCollapsible.style.setProperty(
+              'background',
+              'rgba(33, 37, 41, 0.95)',
+              'important'
+            );
+            // CSS変数も更新
+            navbarCollapsible.style.setProperty(
+              '--bs-body-bg',
+              'rgba(33, 37, 41, 0.95)'
+            );
+            navbarCollapsible.style.setProperty(
+              '--bs-navbar-bg',
+              'rgba(33, 37, 41, 0.95)'
+            );
+          }
+        } else {
+          navbarCollapsible.classList.remove('navbar-shrink');
+          // 大画面でページトップ時の黒背景を強制設定
+          if (window.innerWidth >= 992) {
+            navbarCollapsible.style.setProperty(
+              'background-color',
+              '#212529',
+              'important'
+            );
+            navbarCollapsible.style.setProperty(
+              'background',
+              '#212529',
+              'important'
+            );
+            // CSS変数も黒に戻す
+            navbarCollapsible.style.setProperty('--bs-body-bg', '#212529');
+            navbarCollapsible.style.setProperty('--bs-navbar-bg', '#212529');
+          }
+        }
+      }
+    });
+
+    // Add mobile menu close functionality to smooth scroll links
+    const scrollLinks = document.querySelectorAll(
+      '[data-scroll-to], [data-scroll-to-top]'
+    );
+    scrollLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+  });
+</script>
+
+<style lang='scss'>
+  @import '../../styles/global.scss';
+
+  // 最優先で黒背景を強制適用
+  nav.navbar-root,
+  #mainNav,
+  .navbar.navbar-root,
+  nav#mainNav.navbar-root.navbar-expand-lg.fixed-top {
+    background-color: #212529 !important;
+    background: #212529 !important;
+    background-image: none !important;
+  }
+
+  .navbar-root {
+    background-color: #212529 !important;
+
+    // 大画面では常に黒背景を強制
+    @media (min-width: 992px) {
+      background-color: #212529 !important;
+      background: #212529 !important;
+      background-image: none !important;
+
+      &.navbar-shrink {
+        background-color: rgba(33, 37, 41, 0.95) !important;
+        background: rgba(33, 37, 41, 0.95) !important;
+      }
+    }
+
+    .container {
+      max-width: 1200px; // コンテナ幅を少し広げる
+    }
+
+    .navbar-toggler {
+      font-size: 12px;
+      right: 0;
+      padding: 13px;
+      text-shadow:
+        1px 0 0 #f5fa9e,
+        0px 0 1px #f5fa9e;
+      text-transform: uppercase;
+      color: white !important;
+      border: 0;
+      background-color: var(--primary-color, #c6dd41);
+      font-family: var(--font-heading);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .navbar-toggler-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .navbar-brand {
+      color: var(--primary-color, #c6dd41) !important;
+      font-family: var(--font-script);
+      cursor: pointer;
+
+      &.active,
+      &:active,
+      &:focus,
+      &:hover {
+        color: color-mix(
+          in srgb,
+          var(--primary-color, #c6dd41) 80%,
+          black
+        ) !important;
+      }
+    }
+
+    .nav-link {
+      font-size: 90%;
+      font-weight: 400;
+      padding: 0.75em 0;
+      text-shadow:
+        1px 0 0 #f5fa9e,
+        0px 0 1px #f5fa9e;
+      letter-spacing: 1px;
+      color: white !important;
+      font-family: var(--font-heading);
+      cursor: pointer;
+      transition: color 0.3s ease;
+      white-space: nowrap; // テキストの折り返しを防ぐ
+
+      &.active,
+      &:hover {
+        color: var(--primary-color, #c6dd41) !important;
+      }
+    }
+  }
+
+  @media (min-width: 992px) {
+    .navbar-root {
+      padding-top: 25px;
+      padding-bottom: 25px;
+      transition:
+        padding-top 0.3s,
+        padding-bottom 0.3s,
+        background-color 0.3s ease;
+      border: none;
+      background-color: #212529 !important;
+
+      .navbar-brand {
+        font-size: 1.75em;
+        transition: all 0.3s;
+      }
+
+      .nav-link {
+        padding: 1.1em 0.9em !important; // 左右のパディングを調整
+        white-space: nowrap; // テキストの折り返しを防ぐ
+      }
+
+      // Hide the toggler on large screens
+      .navbar-toggler {
+        display: none !important;
+      }
+
+      // Always show the navbar collapse on large screens
+      .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+      }
+
+      &.navbar-shrink {
+        padding-top: 0;
+        padding-bottom: 0;
+        background-color: rgba(33, 37, 41, 0.95) !important; // 半透明の黒
+
+        .navbar-brand {
+          font-size: 1.25em;
+          padding: 12px 0;
+          text-shadow:
+            1px 0 0 #f5fa9e,
+            0px 0 1px #f5fa9e;
+        }
+      }
+    }
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  // Bootstrapのデフォルトスタイルを強制的に上書き
+  #mainNav.navbar-root,
+  nav#mainNav.navbar-root,
+  .navbar#mainNav.navbar-root {
+    background-color: #212529 !important;
+    background: #212529 !important;
+    background-image: none !important;
+  }
+
+  // 中間サイズの画面での調整
+  @media (min-width: 992px) and (max-width: 1200px) {
+    .navbar-root {
+      .nav-link {
+        padding: 1.1em 0.7em !important; // パディングを調整
+      }
+    }
+  }
+
+  // モバイル専用の背景色とメニュースタイル
+  @media (max-width: 991.98px) {
+    .navbar-root,
+    #mainNav.navbar-root {
+      background-color: #212529 !important;
+    }
+
+    // モバイルメニューのスタイル
+    .navbar-collapse {
+      background-color: #212529 !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+
+    .nav-link {
+      color: white !important;
+      padding: 0.75rem 0 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:hover,
+      &.active {
+        color: var(--primary-color, #c6dd41) !important;
+        background-color: rgba(198, 221, 65, 0.1);
+      }
+    }
+  }
+
+  // 黒背景設定
+  @media (min-width: 992px) {
+    .navbar-root,
+    #mainNav.navbar-root,
+    .navbar.navbar-root,
+    nav.navbar-root,
+    .navbar-root.navbar,
+    #mainNav.navbar-root.navbar {
+      background-color: #212529 !important;
+      background: #212529 !important;
+      background-image: none !important;
+
+      &.navbar-shrink {
+        background-color: rgba(33, 37, 41, 0.95) !important;
+        background: rgba(33, 37, 41, 0.95) !important;
+        background-image: none !important;
+      }
+    }
+
+    // Bootstrapのnavbarクラスも強制的に黒に
+    .navbar {
+      background-color: #212529 !important;
+      background: #212529 !important;
+
+      &.navbar-shrink {
+        background-color: rgba(33, 37, 41, 0.95) !important;
+        background: rgba(33, 37, 41, 0.95) !important;
+      }
+    }
+
+    // コンテナも黒に
+    .navbar-root .container,
+    #mainNav.navbar-root .container {
+      background-color: #212529 !important;
+      background: #212529 !important;
+    }
+  }
+</style>

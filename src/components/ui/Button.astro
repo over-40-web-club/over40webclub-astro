@@ -1,0 +1,139 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  type?: 'button' | 'submit' | 'reset';
+  href?: string;
+  class?: string;
+  disabled?: boolean;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  href,
+  class: className = '',
+  disabled = false,
+  ...rest
+} = Astro.props;
+
+const baseClasses = 'btn';
+const variantClass = `btn-${variant}`;
+const sizeClass = size === 'xl' ? 'btn-xl' : size !== 'md' ? `btn-${size}` : '';
+const classes = [baseClasses, variantClass, sizeClass, className]
+  .filter(Boolean)
+  .join(' ');
+
+const Element = href ? 'a' : 'button';
+const elementProps = href ? { href } : { type, disabled };
+---
+
+<Element class={classes} {...elementProps} {...rest}>
+  <slot />
+</Element>
+
+<style lang='scss'>
+  .btn {
+    font-family:
+      'Montserrat',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif,
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      'Noto Color Emoji';
+    font-weight: 700;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition:
+      color 0.15s ease-in-out,
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-xl {
+    font-size: 18px;
+    padding: 20px 40px;
+  }
+
+  .btn-primary {
+    background-color: rgb(198, 221, 65);
+    border-color: rgb(198, 221, 65);
+    color: white;
+
+    &:active,
+    &:focus,
+    &:hover {
+      background-color: rgb(178, 199, 50) !important;
+      border-color: rgb(178, 199, 50) !important;
+      color: rgb(249, 247, 234);
+      animation: vibration 1s;
+    }
+
+    &:active,
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(198, 221, 65, 0.5) !important;
+    }
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+
+    &:hover {
+      background-color: #5a6268;
+      border-color: #545b62;
+    }
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border-color: rgb(198, 221, 65);
+    color: rgb(198, 221, 65);
+
+    &:hover {
+      background-color: rgb(198, 221, 65);
+      color: white;
+      animation: vibration 1s;
+    }
+  }
+
+  @keyframes vibration {
+    0% {
+      transform: translate(0px, 0px);
+    }
+    25% {
+      transform: translate(2px, 2px);
+    }
+    50% {
+      transform: translate(0px, 2px);
+    }
+    75% {
+      transform: translate(2px, 0px);
+    }
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }
+</style>

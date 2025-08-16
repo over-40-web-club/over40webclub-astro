@@ -1,0 +1,99 @@
+---
+import Icon from './Icon.astro';
+import { iconCategories, getAvailableIcons } from '../../utils/icons.js';
+
+export interface Props {
+  category?: 'solid' | 'brand' | 'legacy' | 'all';
+  showLabels?: boolean;
+  size?: string | number;
+}
+
+const { category = 'all', showLabels = true, size = '2rem' } = Astro.props;
+
+const getIconsToShow = () => {
+  if (category === 'all') {
+    return getAvailableIcons();
+  }
+  return iconCategories[category] || [];
+};
+
+const iconsToShow = getIconsToShow();
+---
+
+<div class='icon-showcase'>
+  <div class='icon-grid'>
+    {
+      iconsToShow.map((iconName) => (
+        <div class='icon-item'>
+          <div class='icon-display'>
+            <Icon name={iconName} size={size} />
+          </div>
+          {showLabels && (
+            <div class='icon-label'>
+              <code>{iconName}</code>
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .icon-showcase {
+    padding: 2rem;
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .icon-item:hover {
+    border-color: var(--primary-color, #c6dd41);
+    box-shadow: 0 2px 8px rgba(198, 221, 65, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .icon-display {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color, #c6dd41);
+  }
+
+  .icon-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    word-break: break-all;
+  }
+
+  .icon-label code {
+    background-color: #f8f9fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .icon-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .icon-item {
+      padding: 0.75rem;
+    }
+  }
+</style>

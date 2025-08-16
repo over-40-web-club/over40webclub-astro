@@ -1,0 +1,451 @@
+/* Font Mixins */
+@mixin serif-font {
+  font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+@mixin script-font {
+  font-family: "Kaushan Script", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+@mixin body-font {
+  font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+@mixin heading-font {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Variables */
+// Restated Bootstrap Variables
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+// Bootstrap variable overrides MUST come before Bootstrap import
+$primary: #c6dd41; // うぐいす色 (rgb(198, 221, 65)) - !defaultを削除
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// Navbar透明背景の最優先適用（Bootstrapの後に配置）
+@media (min-width: 992px) {
+  .navbar,
+  nav.navbar,
+  .navbar-expand-lg,
+  .navbar-root,
+  #mainNav {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    
+    &.navbar-shrink {
+      background-color: rgba(33, 37, 41, 0.95) !important;
+      background: rgba(33, 37, 41, 0.95) !important;
+      background-image: none !important;
+    }
+  }
+}
+
+// Import performance optimizations
+@import "./performance.scss";
+
+/* Custom CSS variables */
+:root {
+  --primary-color: #c6dd41;
+  --bs-primary: #c6dd41;
+  --bs-primary-rgb: 198, 221, 65;
+  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body: 'Roboto Slab', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-script: 'Kaushan Script', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: 'Roboto Slab', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Font display optimization */
+  --font-display: swap;
+}
+
+/* ナビゲーションバー専用のCSS変数上書き */
+@media (min-width: 992px) {
+  #mainNav {
+    --bs-body-bg: transparent;
+    --bs-navbar-bg: transparent;
+    --bs-bg-opacity: 0;
+  }
+  
+  #mainNav.navbar-shrink {
+    --bs-body-bg: rgba(33, 37, 41, 0.95);
+    --bs-navbar-bg: rgba(33, 37, 41, 0.95);
+    --bs-bg-opacity: 0.95;
+  }
+}
+
+/* Font loading optimization */
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kaushan Script';
+  font-display: swap;
+}
+
+/* Global styling for this template */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  @include body-font;
+  font-display: swap;
+}
+
+p {
+  line-height: 1.75;
+}
+
+.text-primary {
+  color: $primary !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  @include heading-font;
+}
+
+.cursor-pointer {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Highlight color customization
+::-moz-selection {
+  background: $primary;
+  text-shadow: none;
+}
+
+::selection {
+  background: $primary;
+  text-shadow: none;
+}
+
+img::selection {
+  background: transparent;
+}
+
+img::-moz-selection {
+  background: transparent;
+}
+
+/* Components */
+// Button Styles
+.btn {
+  @include heading-font;
+  font-weight: 700;
+}
+
+.btn-xl {
+  font-size: 18px;
+  padding: 20px 40px;
+}
+
+.btn-primary {
+  background-color: $primary !important;
+  border-color: $primary !important;
+  color: white !important;
+  
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: darken($primary, 7.5%) !important;
+    border-color: darken($primary, 7.5%) !important;
+    color: rgb(249, 247, 234) !important;
+    animation: vibration 1s;
+  }
+  
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: darken($primary, 10%) !important;
+    border-color: darken($primary, 10%) !important;
+    color: white !important;
+  }
+
+  @keyframes vibration {
+    0% {
+      transform: translate(0px, 0px)
+    }
+    25% {
+      transform: translate(2px, 2px)
+    }
+    50% {
+      transform: translate(0px, 2px)
+    }
+    75% {
+      transform: translate(2px, 0px)
+    }
+    100% {
+      transform: translate(0px, 0px)
+    }
+  }
+  
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
+  }
+}
+
+// Utility classes
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+// Force primary color consistency with highest specificity
+.btn.btn-primary,
+a.btn.btn-primary,
+button.btn.btn-primary,
+.btn-primary.btn,
+a.btn-primary.btn,
+button.btn-primary.btn {
+  background-color: #c6dd41 !important;
+  border-color: #c6dd41 !important;
+  color: white !important;
+  
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: #b2c92d !important;
+    border-color: #b2c92d !important;
+    color: rgb(249, 247, 234) !important;
+  }
+  
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 0.2rem rgba(198, 221, 65, 0.5) !important;
+  }
+}
+
+/* Additional Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+// Section spacing
+section {
+  padding: 100px 0;
+}
+
+// ヒーローセクションは例外
+.hero-section {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  section {
+    padding: 75px 0;
+  }
+  
+  .btn-xl {
+    font-size: 16px;
+    padding: 15px 30px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 90%;
+  }
+  
+  .section-header {
+    h2.section-heading {
+      font-size: 32px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  section {
+    padding: 50px 0;
+  }
+  
+  .btn-xl {
+    font-size: 14px;
+    padding: 12px 24px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 85%;
+  }
+  
+  .section-header {
+    h2.section-heading {
+      font-size: 28px;
+    }
+    
+    h3.section-subheading {
+      margin-bottom: 50px;
+    }
+  }
+}
+
+// Font utility classes
+.font-heading {
+  @include heading-font;
+}
+
+.font-body {
+  @include body-font;
+}
+
+.font-script {
+  @include script-font;
+}
+
+.font-serif {
+  @include serif-font;
+}
+
+// Font weight utilities
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
+}
+
+// Additional utility classes
+.page-section {
+  padding: 100px 0;
+  
+  @media (max-width: 768px) {
+    padding: 75px 0;
+  }
+  
+  @media (max-width: 576px) {
+    padding: 50px 0;
+  }
+}
+
+// Ultimate override for primary buttons - highest specificity
+body .btn-primary,
+body a.btn-primary,
+body button.btn-primary {
+  background-color: #c6dd41 !important;
+  border-color: #c6dd41 !important;
+  color: white !important;
+}
+
+body .btn-primary:hover,
+body .btn-primary:focus,
+body .btn-primary:active,
+body .btn-primary.active,
+body a.btn-primary:hover,
+body a.btn-primary:focus,
+body a.btn-primary:active,
+body a.btn-primary.active,
+body button.btn-primary:hover,
+body button.btn-primary:focus,
+body button.btn-primary:active,
+body button.btn-primary.active {
+  background-color: #b2c92d !important;
+  border-color: #b2c92d !important;
+  color: rgb(249, 247, 234) !important;
+}
+
+// Navbar透明背景の強制適用
+@media (min-width: 992px) {
+  .navbar,
+  nav.navbar,
+  .navbar-expand-lg {
+    background-color: transparent !important;
+    background: transparent !important;
+    
+    &.navbar-shrink {
+      background-color: rgba(33, 37, 41, 0.95) !important;
+      background: rgba(33, 37, 41, 0.95) !important;
+    }
+  }
+}
+
+// 最終手段：すべてのnavbar要素を強制的に透明に
+@media (min-width: 992px) {
+  nav[id="mainNav"],
+  #mainNav,
+  .navbar-root,
+  .transparent-navbar {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    
+    &.navbar-shrink {
+      background-color: rgba(33, 37, 41, 0.95) !important;
+      background: rgba(33, 37, 41, 0.95) !important;
+    }
+  }
+}
+
+// 究極の上書き - 最高の特異性
+html body nav#mainNav.navbar.navbar-root.navbar-expand-lg.fixed-top {
+  @media (min-width: 992px) {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    
+    &.navbar-shrink {
+      background-color: rgba(33, 37, 41, 0.95) !important;
+      background: rgba(33, 37, 41, 0.95) !important;
+    }
+  }
+}
+
+// Font loading fallback
+.fonts-loading {
+  visibility: hidden;
+}
+
+.fonts-loaded {
+  visibility: visible;
+}

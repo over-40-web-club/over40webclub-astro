@@ -1,0 +1,172 @@
+---
+import { getCollection } from 'astro:content';
+
+// Get hero content
+const heroEntries = await getCollection('hero');
+const heroContent = heroEntries[0]?.data;
+
+if (!heroContent) {
+  throw new Error('Hero content not found');
+}
+
+const { header, subheader, imageFileName, jumpToAnchor, jumpToAnchorText } =
+  heroContent;
+
+// Construct the full image path
+const imagePath = `/images/${imageFileName}`;
+---
+
+<section class='hero-section'>
+  <div class='hero-card'>
+    <img
+      src={imagePath}
+      alt=''
+      class='hero-image'
+      width={1920}
+      height={759}
+      loading='eager'
+      decoding='async'
+      fetchpriority='high'
+    />
+    <div class='hero-overlay'>
+      <div class='container'>
+        <div class='hero-content'>
+          <div class='hero-lead-in'>{subheader}</div>
+          <div class='hero-heading text-uppercase'>{header}</div>
+          {
+            jumpToAnchor && jumpToAnchorText && (
+              <a
+                href={`#${jumpToAnchor}`}
+                class='btn btn-primary btn-xl text-uppercase'
+                data-scroll-to={`#${jumpToAnchor}`}
+                style='background-color: #c6dd41 !important; border-color: #c6dd41 !important; color: white !important;'
+              >
+                {jumpToAnchorText}
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang='scss'>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .hero-card {
+    position: relative;
+    height: 100vh; // 画面の高さいっぱいに
+    min-height: 491px; // 最小高さを保持
+    background-color: #212529;
+    background-image: url('/images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+      min-height: 759px; // 最小高さを調整
+    }
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #212529; /* フォールバック背景色 */
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .hero-content {
+    padding-top: 150px;
+    padding-bottom: 100px;
+
+    @media (min-width: 768px) {
+      padding-top: 300px;
+      padding-bottom: 200px;
+    }
+  }
+
+  .hero-lead-in {
+    font-size: 22px;
+    font-style: italic;
+    line-height: 22px;
+    margin-bottom: 25px;
+    text-shadow:
+      100px 100px 20px #f5fa9e,
+      -14px -14px 20px #f5fa9e;
+    font-family: 'Roboto Slab', serif;
+
+    @media (min-width: 768px) {
+      font-size: 40px;
+      font-weight: 600;
+      font-style: italic;
+      line-height: 40px;
+      margin-bottom: 25px;
+      color: rgba(245, 241, 8, 0.8);
+      text-shadow:
+        100px 100px 20px #f5fa9e,
+        -14px -14px 20px #f5fa9e;
+    }
+  }
+
+  .hero-heading {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 50px;
+    margin-bottom: 25px;
+    font-family: 'Montserrat', sans-serif;
+
+    @media (min-width: 768px) {
+      font-size: 75px;
+      font-weight: 700;
+      line-height: 75px;
+      margin-bottom: 50px;
+      box-sizing: border-box;
+      background-color: #f5f6f84d;
+      box-shadow:
+        20px 20px 20px rgb(235, 241, 142),
+        -14px -14px 20px rgb(247, 245, 124);
+    }
+  }
+
+  // Hero section button styling
+  .btn-primary {
+    background-color: #c6dd41 !important;
+    border-color: #c6dd41 !important;
+    color: white !important;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      background-color: #b2c92d !important;
+      border-color: #b2c92d !important;
+      color: rgb(249, 247, 234) !important;
+    }
+  }
+</style>

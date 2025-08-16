@@ -1,0 +1,94 @@
+---
+import { fetchTeamMembersWithFallback } from '../../utils/airtable.js';
+import TeamMember from '../ui/TeamMember.astro';
+import type { SectionData } from '../../types/content.js';
+
+export interface Props {
+  sectionData: SectionData;
+  className?: string;
+}
+
+const { sectionData, className = '' } = Astro.props;
+const { anchor, header, subheader, content } = sectionData;
+// Use 'team' as the section ID for HTML compatibility
+const sectionId = 'team';
+
+// Fetch team members from Airtable at build time
+const teamMembers = await fetchTeamMembersWithFallback();
+---
+
+<section class={`page-section ${className}`} id={sectionId}>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-lg-12 text-center'>
+        <h2 class='section-heading text-uppercase'>{header}</h2>
+        <h3 class='section-subheading text-muted'>{subheader}</h3>
+      </div>
+    </div>
+    <div class='row team-members-row'>
+      {
+        teamMembers.map((member) => (
+          <div class='col-sm-4'>
+            <TeamMember member={member} />
+          </div>
+        ))
+      }
+    </div>
+    {
+      content && (
+        <div class='row'>
+          <div class='col-lg-8 mx-auto text-center'>
+            <p class='large text-muted' set:html={content} />
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .page-section {
+    padding: 100px 0;
+  }
+
+  .section-heading {
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .section-subheading {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 75px;
+    text-transform: none;
+  }
+
+  .large {
+    font-size: 18px;
+  }
+
+  .team-members-row {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .section-heading {
+      font-size: 50px;
+    }
+
+    .team-members-row {
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .team-members-row {
+      margin-left: 60px;
+      margin-right: 60px;
+    }
+  }
+</style>
