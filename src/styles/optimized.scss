@@ -1,0 +1,97 @@
+/* Optimized CSS - minimal Bootstrap import */
+
+// Import Bootstrap functions and variables first
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// Override primary color AFTER importing variables
+$primary: #c6dd41 !default;
+
+// Import Bootstrap maps and utilities
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/utilities";
+
+// Import only essential Bootstrap components
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/forms";
+
+/* Custom styles - minimal and focused */
+:root {
+  --primary-color: #c6dd41;
+  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Roboto Slab', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+
+  &:hover, &:focus, &:active {
+    background-color: darken(#c6dd41, 10%);
+    border-color: darken(#c6dd41, 10%);
+  }
+}
+
+.btn-xl {
+  font-size: 18px;
+  padding: 20px 40px;
+}
+
+section {
+  padding: 100px 0;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 75px 0;
+  }
+  
+  .btn-xl {
+    font-size: 16px;
+    padding: 15px 30px;
+  }
+}
+
+/* Navbar transparency */
+@media (min-width: 992px) {
+  .navbar {
+    background-color: transparent !important;
+    
+    &.navbar-shrink {
+      background-color: rgba(33, 37, 41, 0.95) !important;
+    }
+  }
+}
+
+/* Performance optimizations */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.lazy {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lazy.loaded {
+  opacity: 1;
+}

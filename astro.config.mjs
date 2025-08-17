@@ -16,8 +16,19 @@ export default defineConfig({
       },
     ],
   },
-  // Performance optimizations enabled through build configuration
+  // Performance optimizations
   vite: {
+    build: {
+      cssMinify: true,
+      minify: 'terser',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['bootstrap'],
+          },
+        },
+      },
+    },
     css: {
       preprocessorOptions: {
         scss: {
