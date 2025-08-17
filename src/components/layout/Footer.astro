@@ -7,7 +7,7 @@ const footerEntries = await getCollection('footer');
 const footerData = footerEntries[0]?.data || {};
 
 const {
-  copyright = 'Copyright © Over 40 Web Club ✨ 2023',
+  copyright = `Copyright © Over 40 Web Club ✨ ${new Date().getFullYear()}`,
   social = {},
   privacyText = '',
   privacyHref = '#!',

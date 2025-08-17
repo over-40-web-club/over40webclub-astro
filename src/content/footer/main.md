@@ -1,5 +1,5 @@
 ---
-copyright: 'Copyright © Over 40 Web Club ✨ 2024'
+copyright: 'Copyright © Over 40 Web Club ✨ 2025'
 social:
   twitter: 'shijukarakun'
 privacyText: 'プライバシーポリシー'
