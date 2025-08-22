@@ -4,11 +4,11 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://over40webclub.netlify.app',
+  site: 'https://over40webclub.com',
   output: 'static',
   // Enhanced image optimization configuration
   image: {
-    domains: ['over40webclub.netlify.app'],
+    domains: ['over40webclub.com'],
     remotePatterns: [
       {
         protocol: 'https',
