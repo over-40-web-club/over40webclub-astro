@@ -30,9 +30,6 @@ try {
 }
 
 const requiredEnvVars = [
-  'AIRTABLE_API_TOKEN',
-  'AIRTABLE_BASE_ID',
-  'AIRTABLE_TABLE_NAME',
   'SITE_URL',
 ];
 

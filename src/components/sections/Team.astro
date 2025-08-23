@@ -1,5 +1,5 @@
 ---
-import { fetchTeamMembersWithFallback } from '../../utils/airtable.js';
+import { getCollection } from 'astro:content';
 import TeamMember from '../ui/TeamMember.astro';
 import type { SectionData } from '../../types/content.js';
 
@@ -13,8 +13,18 @@ const { anchor, header, subheader, content } = sectionData;
 // Use 'team' as the section ID for HTML compatibility
 const sectionId = 'team';
 
-// Fetch team members from Airtable at build time
-const teamMembers = await fetchTeamMembersWithFallback();
+// Fetch team members from content collection
+const teamEntries = await getCollection('team');
+const teamMembers = teamEntries
+  .sort((a, b) => (a.data.order || 999) - (b.data.order || 999))
+  .map(entry => ({
+    id: entry.data.id,
+    name: entry.data.name,
+    bio: entry.body,
+    image: entry.data.image || '',
+    imageAlt: `${entry.data.name}のプロフィール写真`,
+    social: entry.data.social || {}
+  }));
 ---
 
 <section class={`page-section ${className}`} id={sectionId}>

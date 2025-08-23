@@ -23,14 +23,13 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "^3.4.2",
-    "airtable": "^0.12.2",
     "astro": "^5.12.9",
     "bootstrap": "^5.2.0",
+    "dotenv": "^17.2.1",
     "sass": "^1.90.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",
-    "@types/airtable": "^0.10.0",
     "jsdom": "^26.1.0",
     "terser": "^5.43.1",
     "typescript": "^5.9.2",

@@ -76,7 +76,7 @@ export interface FooterData {
   quickLinks?: QuickLink[];
 }
 
-// Team member interface (for Airtable integration)
+// Team member interface (for content collection)
 export interface TeamMember {
   id: string;
   name: string;
@@ -92,32 +92,5 @@ export interface TeamMember {
     medium?: string;
     instagram?: string;
     youtube?: string;
-  };
-}
-
-// Raw Airtable team member data structure
-export interface AirtableTeamMember {
-  id: string;
-  fields: {
-    Name: string;
-    Bio: string;
-    'Homepage URL'?: string;
-    'Twitter username'?: string;
-    'GitHub username'?: string;
-    'Instagram username'?: string;
-    'YouTube URL'?: string;
-    Photo?: Array<{
-      id: string;
-      url: string;
-      filename: string;
-      size: number;
-      type: string;
-      thumbnails?: {
-        small?: { url: string; width: number; height: number };
-        large?: { url: string; width: number; height: number };
-        full?: { url: string; width: number; height: number };
-      };
-    }>;
-    Order?: number;
   };
 }

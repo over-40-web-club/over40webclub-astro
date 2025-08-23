@@ -1,60 +1,80 @@
 # Content Collections
 
-This directory contains the content collections for the Over 40 Web Club Astro site.
+このディレクトリには、Over 40 Web Club AstroサイトのContent Collectionsが含まれています。
 
 ## Collections
 
 ### Sections (`sections/`)
 
-Main content sections for the website (About, Portfolio, History, etc.)
+ウェブサイトのメインコンテンツセクション（About、Portfolio、History等）
 
-**Schema:**
+**スキーマ:**
 
-- `title` (optional): Section title
-- `anchor` (optional): Anchor ID for navigation
-- `header` (optional): Section header text
-- `subheader` (optional): Section subheader text
-- `order` (optional): Display order
-- `published` (default: true): Whether to show the section
-- `services` (optional): Array of service items for About section
-- `portfolio` (optional): Array of portfolio items
-- `timeline` (optional): Array of history/timeline items
-- `clients` (optional): Array of client items
+- `title` (任意): セクションタイトル
+- `anchor` (任意): ナビゲーション用のアンカーID
+- `header` (任意): セクションヘッダーテキスト
+- `subheader` (任意): セクションサブヘッダーテキスト
+- `order` (任意): 表示順序
+- `published` (デフォルト: true): セクションを表示するかどうか
+- `services` (任意): Aboutセクション用のサービス項目配列
+- `portfolio` (任意): ポートフォリオ項目配列
+- `timeline` (任意): 歴史・タイムライン項目配列
+- `clients` (任意): クライアント項目配列
+
+### Team (`team/`)
+
+チームメンバーのプロフィール情報
+
+**スキーマ:**
+
+- `id`: 一意のID
+- `name`: 表示名
+- `image` (任意): プロフィール画像のパス
+- `order` (任意): 表示順序
+- `social` (任意): SNSリンクのオブジェクト
+  - `homepage` (任意): ホームページURL
+  - `twitter` (任意): Twitterユーザー名
+  - `facebook` (任意): FacebookユーザーID
+  - `linkedin` (任意): LinkedInユーザー名
+  - `github` (任意): GitHubユーザー名
+  - `medium` (任意): MediumユーザーID
+  - `instagram` (任意): Instagramユーザー名
+  - `youtube` (任意): YouTube チャンネルURL
 
 ### Navigation (`navigation/`)
 
-Navigation bar content
+ナビゲーションバーのコンテンツ
 
-**Schema:**
+**スキーマ:**
 
-- `brand`: Brand text/logo
-- `menuText`: Menu button text
+- `brand`: ブランドテキスト・ロゴ
+- `menuText`: メニューボタンのテキスト
 
 ### Hero (`hero/`)
 
-Hero/top section content
+ヒーロー・トップセクションのコンテンツ
 
-**Schema:**
+**スキーマ:**
 
-- `header`: Main header text
-- `subheader`: Subheader text
-- `imageFileName`: Background image filename
-- `jumpToAnchor`: Target anchor for CTA button
-- `jumpToAnchorText`: CTA button text
+- `header`: メインヘッダーテキスト
+- `subheader`: サブヘッダーテキスト
+- `imageFileName`: 背景画像のファイル名
+- `jumpToAnchor`: CTAボタンのターゲットアンカー
+- `jumpToAnchorText`: CTAボタンのテキスト
 
 ### Footer (`footer/`)
 
-Footer content
+フッターのコンテンツ
 
-**Schema:**
+**スキーマ:**
 
-- `copyright` (optional): Copyright text
-- `socialLinks` (optional): Array of social media links
-- `quickLinks` (optional): Array of quick navigation links
+- `copyright` (任意): 著作権テキスト
+- `socialLinks` (任意): ソーシャルメディアリンクの配列
+- `quickLinks` (任意): クイックナビゲーションリンクの配列
 
-## Usage
+## 使用方法
 
-Import and use the content collections in your Astro components:
+AstroコンポーネントでContent Collectionsをインポートして使用：
 
 ```typescript
 import { getCollection } from 'astro:content';
@@ -65,26 +85,38 @@ import {
   getFooter,
 } from '../utils/content';
 
-// Get all sections
+// 全セクションを取得
 const sections = await getSections();
 
-// Get specific content
+// チームメンバーを取得
+const teamMembers = await getCollection('team');
+
+// 特定のコンテンツを取得
 const navigation = await getNavigation();
 const hero = await getHero();
 const footer = await getFooter();
 ```
 
-## File Structure
+## ファイル構造
 
 ```
 src/content/
-├── config.ts          # Content collection definitions
-├── sections/           # Main content sections
-│   └── about.md
-├── navigation/         # Navigation content
+├── config.ts          # Content collection定義
+├── sections/           # メインコンテンツセクション
+│   ├── about.md
+│   ├── contact.md
+│   ├── history.md
+│   ├── portfolio.md
+│   └── team.md
+├── team/              # チームメンバープロフィール
+│   ├── pitang1965.md
+│   ├── horumont.md
+│   ├── return-null.md
+│   └── ...            # 他のメンバーファイル
+├── navigation/        # ナビゲーションコンテンツ
 │   └── main.md
-├── hero/              # Hero section content
+├── hero/             # ヒーローセクションコンテンツ
 │   └── main.md
-└── footer/            # Footer content
+└── footer/           # フッターコンテンツ
     └── main.md
 ```

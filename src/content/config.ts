@@ -79,6 +79,29 @@ const heroCollection = defineCollection({
   }),
 });
 
+// Team member collection
+const teamCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    image: z.string().optional(),
+    order: z.number().optional(),
+    social: z
+      .object({
+        homepage: z.string().optional(),
+        twitter: z.string().optional(),
+        facebook: z.string().optional(),
+        linkedin: z.string().optional(),
+        github: z.string().optional(),
+        medium: z.string().optional(),
+        instagram: z.string().optional(),
+        youtube: z.string().optional(),
+      })
+      .optional(),
+  }),
+});
+
 // Footer collection
 const footerCollection = defineCollection({
   type: 'content',
@@ -108,4 +131,5 @@ export const collections = {
   navigation: navigationCollection,
   hero: heroCollection,
   footer: footerCollection,
+  team: teamCollection,
 };
