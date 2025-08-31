@@ -8,25 +8,7 @@ The following environment variables need to be configured in the Netlify dashboa
 
 #### Required Variables
 
-1. **AIRTABLE_API_TOKEN**
-
-   - Description: API token for accessing Airtable data
-   - Source: Airtable Account Settings > Developer Hub > Personal Access Tokens
-   - Example: `patXXXXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
-
-2. **AIRTABLE_BASE_ID**
-
-   - Description: Base ID for the team members table
-   - Source: Airtable base URL (e.g., `https://airtable.com/appXXXXXXXXXXXXXX/`)
-   - Example: `appXXXXXXXXXXXXXX`
-
-3. **AIRTABLE_TABLE_NAME**
-
-   - Description: Name of the table containing team member data
-   - Default: `Team`
-   - Example: `Team`
-
-4. **SITE_URL**
+1. **SITE_URL**
    - Description: Canonical URL of the site
    - Example: `https://over40web.club`
 
@@ -102,9 +84,8 @@ Before deploying to production:
    npm run preview
    ```
 
-2. **Verify environment variables**:
+2. **Verify functionality**:
 
-   - Check that team data loads correctly
    - Verify contact form functionality
    - Test all page routes
 
@@ -117,13 +98,7 @@ Before deploying to production:
 
 ### Build Failures
 
-1. **Airtable connection issues**:
-
-   - Verify `AIRTABLE_API_TOKEN` is correct
-   - Check `AIRTABLE_BASE_ID` format
-   - Ensure table name matches `AIRTABLE_TABLE_NAME`
-
-2. **Missing environment variables**:
+1. **Missing environment variables**:
 
    - Check Netlify dashboard environment variables
    - Verify variable names match exactly
@@ -142,7 +117,7 @@ Before deploying to production:
    - Check Netlify Forms dashboard for submissions
    - Ensure form action points to correct endpoint
 
-2. **Missing team data**:
-   - Check Airtable API permissions
-   - Verify base and table IDs
-   - Review network requests in browser dev tools
+2. **Content issues**:
+   - Verify content files are present
+   - Check content schema validation
+   - Review build logs for content errors

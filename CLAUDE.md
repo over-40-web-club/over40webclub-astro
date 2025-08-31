@@ -9,7 +9,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` - Build production site to ./dist/
 - `npm run preview` - Preview build locally before deploying
 - `npm run type-check` - Run TypeScript type checking with Astro
-- `npm run verify-deployment` - Verify environment variables and deployment configuration
 
 ### Testing Commands
 - `npm run test` - Run Vitest tests once
@@ -40,17 +39,15 @@ This is an Astro 5.x static site with TypeScript, migrated from Gatsby. The arch
 
 ### Content Management
 - **Content Collections**: Structured content in `src/content/` with Zod schemas defined in `config.ts`
-- **Airtable Integration**: Team member data fetched from Airtable API with fallback data
 - **Markdown Content**: Section content managed as markdown files in content collections
 
 ### External Dependencies
-- **Airtable API**: Team data integration with error handling and fallback
 - **Bootstrap 5.2.0**: SCSS integration with custom variable overrides
-- **Environment Variables**: Required: `AIRTABLE_API_TOKEN`, `AIRTABLE_BASE_ID`, `AIRTABLE_TABLE_NAME`, `SITE_URL`
+- **Environment Variables**: Required: `SITE_URL`
 
 ### Performance Features
 - Astro's built-in optimizations with static site generation
-- Image optimization configured for Airtable domains
+- Image optimization with built-in Astro features
 - CSS/JS minification with Terser
 - Manual chunk splitting for vendor dependencies
 - Bootstrap SCSS variables pre-imported globally
@@ -62,12 +59,9 @@ This is an Astro 5.x static site with TypeScript, migrated from Gatsby. The arch
 
 ### Deployment Configuration
 - **Target**: Netlify (configured in astro.config.mjs)
-- **Build Verification**: `scripts/verify-deployment.js` validates environment setup
-- **Environment Setup**: Use `npm run verify-deployment` before deploying
 
 ### Development Notes
 - All components use TypeScript for type safety
 - Content is validated using Zod schemas in content collections
-- Airtable integration includes comprehensive error handling with fallback data
 - SCSS preprocessing configured with Bootstrap integration
 - Performance monitoring and SEO components included

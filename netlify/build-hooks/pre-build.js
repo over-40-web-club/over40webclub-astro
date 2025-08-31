@@ -28,7 +28,7 @@ if (isProduction) {
 }
 
 // Verify critical environment variables
-const criticalVars = ['AIRTABLE_API_TOKEN', 'AIRTABLE_BASE_ID'];
+const criticalVars = ['SITE_URL'];
 const missingVars = criticalVars.filter((varName) => !process.env[varName]);
 
 if (missingVars.length > 0) {

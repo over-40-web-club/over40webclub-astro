@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:analyze": "astro build",
-    "build:verify": "npm run verify-deployment && astro build",
+    "build:verify": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest --run",
@@ -17,8 +17,7 @@
     "type-check": "astro check",
     "analyze": "echo 'Bundle analysis - check dist/ folder for generated assets'",
     "lighthouse": "echo 'Run lighthouse manually: npx lighthouse http://localhost:4321'",
-    "perf:audit": "npm run build && echo 'Performance audit complete - check dist/ folder'",
-    "verify-deployment": "node scripts/verify-deployment.js"
+    "perf:audit": "npm run build && echo 'Performance audit complete - check dist/ folder'"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
