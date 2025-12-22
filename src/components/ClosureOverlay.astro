@@ -1,0 +1,163 @@
+---
+// 閉鎖オーバーレイコンポーネント
+---
+
+<div id="closure-overlay" class="closure-overlay">
+  <div class="closure-content">
+    <h1 class="closure-title">Over 40 Web Clubは2025年末を持って閉鎖しました</h1>
+
+    <div class="age-check">
+      <input
+        type="text"
+        id="age-input"
+        class="age-input"
+        placeholder="..."
+        autocomplete="off"
+      />
+      <div id="error-message" class="error-message"></div>
+    </div>
+  </div>
+</div>
+
+<button id="closure-toggle-btn" class="closure-toggle-btn hidden" title="閉鎖状態に戻す">
+  閉鎖
+</button>
+
+<style>
+  .closure-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  }
+
+  .closure-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .closure-content {
+    text-align: center;
+    color: #ffffff;
+    max-width: 800px;
+    padding: 2rem;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .closure-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    line-height: 1.4;
+    font-family: 'Roboto Slab', serif;
+  }
+
+  .age-check {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+  }
+
+  .age-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 200px;
+  }
+
+  .age-input:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #c6dd41;
+    box-shadow: 0 0 0 3px rgba(198, 221, 65, 0.2);
+  }
+
+  .age-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .error-message {
+    margin-top: 0.5rem;
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    min-height: 1.5rem;
+    font-weight: 500;
+  }
+
+  .closure-toggle-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9998;
+    opacity: 1;
+  }
+
+  .closure-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-color: #c6dd41;
+    transform: translateY(-2px);
+  }
+
+  .closure-toggle-btn.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .closure-title {
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .age-check {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      left: 1rem;
+      text-align: center;
+    }
+
+    .age-input {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .closure-toggle-btn {
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+    }
+  }
+</style>
+
+<script is:inline src="/closure-overlay.js"></script>

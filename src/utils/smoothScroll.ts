@@ -133,24 +133,15 @@ export function initializeSmoothScroll(
 ): void {
   const opts = { ...DEFAULT_OPTIONS, ...options };
 
-  console.log('Initializing smooth scroll with options:', opts);
-
   // Handle navigation links with data-scroll-to attribute
   const scrollLinks = document.querySelectorAll('[data-scroll-to]');
-  console.log('Found scroll links:', scrollLinks.length);
 
-  scrollLinks.forEach((link, index) => {
+  scrollLinks.forEach((link) => {
     const target = link.getAttribute('data-scroll-to');
-    console.log(`Link ${index}: target="${target}"`);
 
     if (target) {
-      // Check if target element exists
-      const targetElement = document.querySelector(target);
-      console.log(`Target element for "${target}":`, targetElement);
-
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(`Scrolling to: ${target}`);
         smoothScrollTo(target, opts);
       });
     }
@@ -158,30 +149,22 @@ export function initializeSmoothScroll(
 
   // Handle links with data-scroll-to-top attribute
   const topLinks = document.querySelectorAll('[data-scroll-to-top]');
-  console.log('Found top scroll links:', topLinks.length);
 
   topLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('Scrolling to top');
       smoothScrollToTop(opts);
     });
   });
 
   // Handle regular anchor links with smooth scrolling
   const anchorLinks = document.querySelectorAll('a[href^="#"]');
-  console.log('Found anchor links:', anchorLinks.length);
 
   anchorLinks.forEach((link) => {
     const href = link.getAttribute('href');
     if (href && href !== '#') {
-      // Check if target element exists
-      const targetElement = document.querySelector(href);
-      console.log(`Anchor link "${href}":`, targetElement);
-
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(`Scrolling to anchor: ${href}`);
         smoothScrollTo(href, opts);
       });
     }
