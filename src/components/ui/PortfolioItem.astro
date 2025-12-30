@@ -1,6 +1,7 @@
 ---
 import OptimizedImage from './OptimizedImage.astro';
 import Icon from './Icon.astro';
+import { marked } from 'marked';
 
 export interface Props {
   imageFileName: string;
@@ -22,6 +23,12 @@ const {
 
 // Generate unique ID for modal
 const modalId = `portfolio-modal-${header.replace(/\s+/g, '-').toLowerCase()}`;
+
+// Convert markdown to HTML
+const htmlContent = await marked(content, {
+  gfm: true, // GitHub Flavored Markdown
+  breaks: true, // Convert \n to <br>
+});
 ---
 
 <div class='col-md-4 col-sm-6 portfolio-item'>
@@ -77,7 +84,7 @@ const modalId = `portfolio-modal-${header.replace(/\s+/g, '-').toLowerCase()}`;
           width={600}
           height={400}
         />
-        <div class='portfolio-content' set:html={content} />
+        <div class='portfolio-content' set:html={htmlContent} />
         {
           extraInfo && extraInfo.length > 0 && (
             <div class='extra-info mt-3'>

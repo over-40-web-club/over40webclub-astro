@@ -15,8 +15,8 @@ portfolios:
       - '講師：そんほんす '
       - 'カテゴリ: Astro、microCMS'
   - imageFileName: 'portfolio/10-thumbnail.jpg'
-    imageFileNameDetail: 'portfolio/10-full.jpg'
-    header: 'ヘッドレスCMSで爆速ブログ構築〜'
+    imageFileNameDetail: 'portfolio/10-ヘッドレスCMSfull.jpg'
+    header: 'で爆速ブログ構築〜'
     subheader: '2021年05月29日(土）15:00～16:00'
     content: 'ヘッドレスCMSで爆速ブログ構築〜 ✨✨**[Connpassイベント会場はこちら](https://over40webclub.connpass.com/event/212129/)**✨✨'
     extraInfo:
