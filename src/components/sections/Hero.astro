@@ -9,8 +9,14 @@ if (!heroContent) {
   throw new Error('Hero content not found');
 }
 
-const { header, subheader, imageFileName, jumpToAnchor, jumpToAnchorText } =
-  heroContent;
+const {
+  header,
+  subheader,
+  imageFileName,
+  jumpToAnchor,
+  jumpToAnchorText,
+  announcement,
+} = heroContent;
 
 // Construct the full image path
 const imagePath = `/images/${imageFileName}`;
@@ -31,6 +37,13 @@ const imagePath = `/images/${imageFileName}`;
     <div class='hero-overlay'>
       <div class='container'>
         <div class='hero-content'>
+          {
+            announcement && (
+              <div class='announcement-box'>
+                <div class='announcement-content'>{announcement}</div>
+              </div>
+            )
+          }
           <div class='hero-lead-in'>{subheader}</div>
           <div class='hero-heading text-uppercase'>{header}</div>
           {
@@ -108,6 +121,37 @@ const imagePath = `/images/${imageFileName}`;
     @media (min-width: 768px) {
       padding-top: 300px;
       padding-bottom: 200px;
+    }
+  }
+
+  .announcement-box {
+    background-color: rgba(220, 53, 69, 0.95);
+    border: 3px solid #ff4444;
+    border-radius: 8px;
+    padding: 20px 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.5);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: 768px) {
+      padding: 30px 40px;
+      margin-bottom: 50px;
+    }
+  }
+
+  .announcement-content {
+    color: white;
+    font-size: 16px;
+    line-height: 1.8;
+    text-align: left;
+    white-space: pre-line;
+    font-family: 'Roboto Slab', serif;
+
+    @media (min-width: 768px) {
+      font-size: 18px;
+      line-height: 2;
     }
   }
 

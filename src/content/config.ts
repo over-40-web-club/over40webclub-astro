@@ -76,6 +76,7 @@ const heroCollection = defineCollection({
     imageFileName: z.string(),
     jumpToAnchor: z.string(),
     jumpToAnchorText: z.string(),
+    announcement: z.string().optional(),
   }),
 });
 
