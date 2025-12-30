@@ -8,7 +8,7 @@ export interface SiteConfig {
 }
 
 // Re-export team member types from content.ts
-export type { TeamMember, AirtableTeamMember } from './content.js';
+export type { TeamMember } from './content.js';
 
 // Content types
 export interface SectionContent {

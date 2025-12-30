@@ -53,7 +53,7 @@ const seoData: SEOData = {
 };
 
 const metaTags = generateMetaTags(seoData);
-const schemas = generatePageSchema(seoData);
+const schemas: any[] = generatePageSchema(seoData);
 const canonicalURL = generateCanonicalUrl(Astro.url.pathname);
 const robotsContent = generateRobotsContent({
   index: !noindex,
@@ -150,11 +150,11 @@ if (faqs && faqs.length > 0) {
 
 <!-- JSON-LD Structured Data -->
 {
-  schemas.map((schema, index) => (
+  schemas.map((schema) => (
     <script
       type='application/ld+json'
       set:html={JSON.stringify(schema)}
-      key={index}
+      is:inline
     />
   ))
 }

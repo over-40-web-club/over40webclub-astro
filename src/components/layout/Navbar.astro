@@ -73,7 +73,7 @@ const anchors = sortedSections.map((section) => ({
   // Helper function to close mobile menu
   function closeMobileMenu() {
     if (isMobile()) {
-      const navbarCollapse = document.querySelector('#navbarResponsive');
+      const navbarCollapse = document.querySelector('#navbarResponsive') as HTMLElement | null;
       if (navbarCollapse && navbarCollapse.classList.contains('show')) {
         const bsCollapse = new (window as any).bootstrap.Collapse(
           navbarCollapse
@@ -86,7 +86,7 @@ const anchors = sortedSections.map((section) => ({
   // Initialize navbar functionality
   document.addEventListener('DOMContentLoaded', function () {
     // 初期背景色を設定
-    const navbar = document.querySelector('#mainNav');
+    const navbar = document.querySelector('#mainNav') as HTMLElement | null;
     if (navbar && window.innerWidth >= 992) {
       // 複数の方法で黒背景を強制設定
       navbar.style.setProperty('background-color', '#212529', 'important');
@@ -155,7 +155,7 @@ const anchors = sortedSections.map((section) => ({
 
     // Add callback for navbar shrinking
     scrollMonitor.addCallback((scrollTop, activeSection) => {
-      const navbarCollapsible = document.body.querySelector('#mainNav');
+      const navbarCollapsible = document.body.querySelector('#mainNav') as HTMLElement | null;
       if (navbarCollapsible) {
         if (scrollTop > 100) {
           navbarCollapsible.classList.add('navbar-shrink');

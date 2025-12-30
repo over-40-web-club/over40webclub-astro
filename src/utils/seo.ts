@@ -172,7 +172,7 @@ export function generateFAQSchema(
  * Generate complete structured data for a page
  */
 export function generatePageSchema(data: SEOData = {}) {
-  const schemas = [generateOrganizationSchema(), generateWebSiteSchema()];
+  const schemas: any[] = [generateOrganizationSchema(), generateWebSiteSchema()];
 
   // Add article schema if it's an article type
   if (data.type === 'article') {

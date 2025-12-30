@@ -6,24 +6,38 @@ export interface ServiceItem {
 }
 
 export interface PortfolioItem {
-  title: string;
+  title?: string;
   subtitle?: string;
-  image: string;
-  category: string;
+  image?: string;
+  category?: string;
   url?: string;
+  // Content collection schema fields
+  imageFileName?: string;
+  imageFileNameDetail?: string;
+  header?: string;
+  subheader?: string;
+  content?: string;
+  extraInfo?: string[];
 }
 
 export interface HistoryItem {
-  date: string;
-  title: string;
-  content: string;
+  date?: string;
+  title?: string;
+  content?: string;
   image?: string;
+  header?: string;
+  subheader?: string;
+  imageFileName?: string;
+  imageContent?: string;
 }
 
 export interface ClientItem {
-  name: string;
-  logo: string;
+  name?: string;
+  logo?: string;
   url?: string;
+  // Content collection schema fields
+  imageFileName?: string;
+  href?: string;
 }
 
 export interface SocialLink {
@@ -43,14 +57,17 @@ export interface SectionData {
   anchor?: string;
   header?: string;
   subheader?: string;
+  content?: string;
   order?: number;
   published?: boolean;
   services?: ServiceItem[];
   portfolio?: PortfolioItem[];
+  portfolios?: PortfolioItem[];
   timeline?: HistoryItem[];
   clients?: ClientItem[];
   address?: string;
   phone?: string;
+  telephone?: string;
   email?: string;
 }
 

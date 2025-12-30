@@ -190,7 +190,7 @@ export function getIconCategory(
   iconName: string
 ): keyof typeof iconCategories | null {
   for (const [category, icons] of Object.entries(iconCategories)) {
-    if (icons.includes(iconName as any)) {
+    if ((icons as readonly string[]).includes(iconName)) {
       return category as keyof typeof iconCategories;
     }
   }

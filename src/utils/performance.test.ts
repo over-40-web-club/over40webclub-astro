@@ -125,7 +125,7 @@ describe('Performance Monitoring', () => {
     } as any;
 
     // Mock PerformanceObserver
-    global.PerformanceObserver = vi.fn().mockImplementation((callback) => ({
+    (global as any).PerformanceObserver = vi.fn().mockImplementation((callback) => ({
       observe: vi.fn(),
       disconnect: vi.fn(),
     }));

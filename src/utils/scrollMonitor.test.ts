@@ -83,15 +83,18 @@ beforeEach(() => {
     writable: true,
   });
 
-  // Mock IntersectionObserver
-  mockIntersectionObserver.mockImplementation((callback, options) => ({
-    observe: mockObserve,
-    disconnect: mockDisconnect,
-    unobserve: vi.fn(),
-  }));
+  // Mock IntersectionObserver as a class
+  class MockIntersectionObserver {
+    observe = mockObserve;
+    disconnect = mockDisconnect;
+    unobserve = vi.fn();
+    constructor(callback: any, options?: any) {
+      mockIntersectionObserver(callback, options);
+    }
+  }
 
   Object.defineProperty(window, 'IntersectionObserver', {
-    value: mockIntersectionObserver,
+    value: MockIntersectionObserver,
     writable: true,
   });
 });
@@ -183,7 +186,7 @@ describe('getActiveSection', () => {
     // section1: 300 >= 0 - 100 = -100 ✓ (active)
     // section2: 300 >= 200 - 100 = 100 ✓ (active, overwrites section1)
     // section3: 300 >= 400 - 100 = 300 ✓ (active, overwrites section2)
-    const activeSection = getActiveSection(sections, 100);
+    const activeSection = getActiveSection(sections as any, 100);
     expect(activeSection).toBe('section3');
   });
 
@@ -192,7 +195,7 @@ describe('getActiveSection', () => {
 
     const sections = [createMockElement('section1', 500, 200)];
 
-    const activeSection = getActiveSection(sections, 100);
+    const activeSection = getActiveSection(sections as any, 100);
     expect(activeSection).toBe(null);
   });
 });

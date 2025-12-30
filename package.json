@@ -20,18 +20,18 @@
     "perf:audit": "npm run build && echo 'Performance audit complete - check dist/ folder'"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/sitemap": "^3.4.2",
-    "astro": "^5.12.9",
-    "bootstrap": "^5.2.0",
-    "dotenv": "^17.2.1",
-    "sass": "^1.90.0"
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.16.6",
+    "bootstrap": "^5.3.8",
+    "dotenv": "^17.2.3",
+    "sass": "^1.97.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.2",
-    "jsdom": "^26.1.0",
-    "terser": "^5.43.1",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "@playwright/test": "^1.57.0",
+    "jsdom": "^27.4.0",
+    "terser": "^5.44.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
   }
 }

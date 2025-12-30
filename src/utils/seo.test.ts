@@ -51,7 +51,7 @@ describe('SEO Utilities', () => {
         tags: ['test', 'article'],
       };
 
-      const schema = generateArticleSchema(data);
+      const schema = generateArticleSchema(data) as any;
 
       expect(schema['@context']).toBe('https://schema.org');
       expect(schema['@type']).toBe('Article');
