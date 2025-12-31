@@ -5,15 +5,6 @@ subheader: 'これまでの活動'
 order: 2
 published: true
 portfolios:
-  - imageFileName: 'portfolio/13-thumbnail.jpg'
-    imageFileNameDetail: 'portfolio/13-full.jpg'
-    header: '40代から IT 業界への転身した方６人の話を聞く会'
-    subheader: '2024年12月1日（日）'
-    content: '40代からIT業界へ転身した6名の方々の経験談を聞く会を開催しました。✨✨**[Connpassイベント会場はこちら](https://over40webclub.connpass.com/event/334977/)**✨✨'
-    extraInfo:
-      - '日付：2024年12月1日（日）'
-      - '司会：そんほんす'
-      - 'カテゴリ：キャリア'
   - imageFileName: 'portfolio/14-thumbnail.jpg'
     imageFileNameDetail: 'portfolio/14-full.jpg'
     header: '大阪オフ会'
@@ -31,6 +22,15 @@ portfolios:
     extraInfo:
       - '日付：2025年3月5日（水）'
       - 'カテゴリ：交流会'
+  - imageFileName: 'portfolio/13-thumbnail.jpg'
+    imageFileNameDetail: 'portfolio/13-full.jpg'
+    header: '40代から IT 業界への転身した方６人の話を聞く会'
+    subheader: '2024年12月1日（日）'
+    content: '40代からIT業界へ転身した6名の方々の経験談を聞く会を開催しました。✨✨**[Connpassイベント会場はこちら](https://over40webclub.connpass.com/event/334977/)**✨✨'
+    extraInfo:
+      - '日付：2024年12月1日（日）'
+      - '司会：そんほんす'
+      - 'カテゴリ：キャリア'
   - imageFileName: 'portfolio/12-thumbnail.jpg'
     imageFileNameDetail: 'portfolio/12-full.jpg'
     header: 'AstroとmicroCMSで作るシンプルコーポレートサイト'
