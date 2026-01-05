@@ -31,19 +31,67 @@
 
     // 音声プレイヤーの初期化
     var audio = new Audio('/audio/over40webclub_closing_message.mp3');
+    audio.preload = 'metadata'; // メタデータを事前読み込み
+    var isLoading = false;
+    var originalButtonHTML = audioPlayBtn.innerHTML;
+
+    // 音声読み込みエラー時の処理
+    audio.addEventListener('error', function (e) {
+      console.error('Audio loading error:', e);
+      audioPlayBtn.innerHTML = originalButtonHTML;
+      audioPlayBtn.disabled = false;
+      isLoading = false;
+      alert('音声ファイルの読み込みに失敗しました。ネットワーク接続を確認してください。');
+    });
 
     // 音声再生ボタンのクリックイベント
     audioPlayBtn.addEventListener('click', function () {
+      if (isLoading) {
+        console.log('Already loading audio');
+        return;
+      }
+
       if (audio.paused) {
-        audio
-          .play()
-          .then(function () {
-            console.log('Audio started playing');
-            audioPlayBtn.classList.add('playing');
-          })
-          .catch(function (err) {
-            console.error('Failed to play audio:', err);
-          });
+        // 読み込み状態を表示
+        isLoading = true;
+        audioPlayBtn.disabled = true;
+        audioPlayBtn.innerHTML = '読み込み中...';
+
+        // 音声が再生可能になったら再生
+        var playAudio = function () {
+          audio
+            .play()
+            .then(function () {
+              console.log('Audio started playing');
+              audioPlayBtn.innerHTML = originalButtonHTML;
+              audioPlayBtn.disabled = false;
+              audioPlayBtn.classList.add('playing');
+              isLoading = false;
+            })
+            .catch(function (err) {
+              console.error('Failed to play audio:', err);
+              audioPlayBtn.innerHTML = originalButtonHTML;
+              audioPlayBtn.disabled = false;
+              isLoading = false;
+              alert('音声の再生に失敗しました: ' + err.message);
+            });
+        };
+
+        // 音声が十分に読み込まれているかチェック
+        if (audio.readyState >= 3) {
+          // HAVE_FUTURE_DATA 以上なら即座に再生
+          playAudio();
+        } else {
+          // まだ読み込まれていない場合は、読み込みを待つ
+          var onCanPlay = function () {
+            audio.removeEventListener('canplaythrough', onCanPlay);
+            playAudio();
+          };
+          audio.addEventListener('canplaythrough', onCanPlay);
+
+          // 読み込みを開始
+          audio.load();
+        }
       } else {
         audio.pause();
         audioPlayBtn.classList.remove('playing');

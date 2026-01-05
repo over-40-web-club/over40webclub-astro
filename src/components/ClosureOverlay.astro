@@ -76,6 +76,7 @@
     background: none;
     border: none;
     font-size: 3rem;
+    color: #ffffff;
     cursor: pointer;
     transition: all 0.3s ease;
     padding: 0.5rem;
@@ -92,6 +93,12 @@
 
   .audio-play-btn:active {
     transform: scale(0.95);
+  }
+
+  .audio-play-btn:disabled {
+    color: #ffffff;
+    opacity: 0.9;
+    cursor: wait;
   }
 
   .audio-play-btn.playing {
