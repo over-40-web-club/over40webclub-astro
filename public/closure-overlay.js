@@ -31,7 +31,7 @@
 
     // 音声プレイヤーの初期化
     var audio = new Audio('/audio/over40webclub_closing_message.mp3');
-    audio.preload = 'metadata'; // メタデータを事前読み込み
+    audio.preload = 'auto'; // PWA環境での即座の再生のため、自動プリロード
     var isLoading = false;
     var originalButtonHTML = audioPlayBtn.innerHTML;
 
@@ -43,6 +43,10 @@
       isLoading = false;
       alert('音声ファイルの読み込みに失敗しました。ネットワーク接続を確認してください。');
     });
+
+    // PWA環境でのスムーズな再生のため、事前に読み込みを開始
+    // ユーザーがクリックした時点で再生可能な状態にする
+    audio.load();
 
     // 音声再生ボタンのクリックイベント
     audioPlayBtn.addEventListener('click', function () {
@@ -57,11 +61,14 @@
         audioPlayBtn.disabled = true;
         audioPlayBtn.innerHTML = '読み込み中...';
 
-        // 音声が再生可能になったら再生
-        var playAudio = function () {
-          audio
-            .play()
+        // PWAでのユーザージェスチャーコンテキスト維持のため、
+        // クリックイベント内で即座にplay()を試行
+        var playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise
             .then(function () {
+              // 再生成功
               console.log('Audio started playing');
               audioPlayBtn.innerHTML = originalButtonHTML;
               audioPlayBtn.disabled = false;
@@ -69,28 +76,38 @@
               isLoading = false;
             })
             .catch(function (err) {
-              console.error('Failed to play audio:', err);
-              audioPlayBtn.innerHTML = originalButtonHTML;
-              audioPlayBtn.disabled = false;
-              isLoading = false;
-              alert('音声の再生に失敗しました: ' + err.message);
+              console.log('Initial play failed, loading audio first:', err.message);
+
+              // 再生に失敗した場合（データ不足など）、ロードしてから再試行
+              var onCanPlay = function () {
+                audio.removeEventListener('canplaythrough', onCanPlay);
+
+                // ロード完了後に再生を試行
+                // 注: この時点ではユーザージェスチャーコンテキストが失われている可能性があるため、
+                // ユーザーに再度クリックを促す必要がある場合がある
+                audio
+                  .play()
+                  .then(function () {
+                    console.log('Audio started playing after load');
+                    audioPlayBtn.innerHTML = originalButtonHTML;
+                    audioPlayBtn.disabled = false;
+                    audioPlayBtn.classList.add('playing');
+                    isLoading = false;
+                  })
+                  .catch(function (retryErr) {
+                    console.error('Failed to play audio after load:', retryErr);
+                    audioPlayBtn.innerHTML = originalButtonHTML;
+                    audioPlayBtn.disabled = false;
+                    isLoading = false;
+                    // PWA環境ではユーザージェスチャーが必要なため、再度クリックを促す
+                    alert('音声の準備ができました。もう一度ボタンをタップしてください。');
+                    // 次回のクリックでは既にロード済みなので再生される
+                  });
+              };
+
+              audio.addEventListener('canplaythrough', onCanPlay);
+              audio.load();
             });
-        };
-
-        // 音声が十分に読み込まれているかチェック
-        if (audio.readyState >= 3) {
-          // HAVE_FUTURE_DATA 以上なら即座に再生
-          playAudio();
-        } else {
-          // まだ読み込まれていない場合は、読み込みを待つ
-          var onCanPlay = function () {
-            audio.removeEventListener('canplaythrough', onCanPlay);
-            playAudio();
-          };
-          audio.addEventListener('canplaythrough', onCanPlay);
-
-          // 読み込みを開始
-          audio.load();
         }
       } else {
         audio.pause();
