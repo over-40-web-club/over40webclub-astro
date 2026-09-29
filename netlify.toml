@@ -23,20 +23,20 @@
 
 # Headers for security and performance
 [[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    # Hashed build assets: safe to cache forever
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    # Cache static assets for 1 year
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.html"
-  [headers.values]
-    # Cache HTML files for 1 hour
-    Cache-Control = "public, max-age=3600"
+    # HTML and unhashed assets: always revalidate so updates show immediately
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/sw.js"
